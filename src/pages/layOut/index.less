@@ -130,13 +130,17 @@
     width: 100%;
     height: 100%;
     min-height: 60px;
-    display: flex;
+    // display: flex;
     border: 1px dotted #a7b1bd;
     margin-right: 10px;
+
+
+
 
     .componentItem{
         line-height: 60px;
         margin: 0px 5px;
+      
     }
 
     &:hover {
@@ -153,7 +157,10 @@
 .containerSequence{
     display: flex;
     flex-flow: wrap;
-
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     .chooseBtn{
         border: 1px solid #006aff !important;
     }
@@ -180,6 +187,14 @@
         }
 
     }
+
 }
 
 
+:global(.ant-form-item) {
+    margin-bottom: 0px!important;
+}
+
+:global(.ant-drawer-body .grid-container>div) {
+    margin-right: 10px!important;
+}

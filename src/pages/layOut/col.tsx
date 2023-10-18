@@ -130,11 +130,9 @@ const ColContainer = (props: any): any => {
       const { component } = element[0];
 
       return (
-        <div key={`${item.key}-${new Date()}`}>
-          <Element dataKey={item.key}>
-            <div className={styles.componentItem}>{component}</div>
-          </Element>
-        </div>
+        <Element key={`${item.key}-${new Date()}`} dataKey={item.key}>
+          <div className={styles.componentItem}>{component}</div>
+        </Element>
       );
     });
   };
