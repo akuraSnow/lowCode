@@ -21,11 +21,14 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "codemirror": "^5.59.1",
     "dynamic-builder": "^0.0.6",
     "dynamic-provider": "^0.0.5",
     "file-saver": "^2.0.5",
     "jsonfile": "^6.1.0",
+    "monaco-editor": "^0.44.0",
     "react": "17.x",
+    "react-codemirror2": "^7.2.1",
     "react-dom": "17.x",
     "umi": "^3.5.41"
   },

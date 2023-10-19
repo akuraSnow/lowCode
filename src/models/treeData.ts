@@ -1,7 +1,5 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 
-import { operateItem } from '../utils/index';
-
 export interface UserInfoModelState {
   count: any[];
   chooseKey: string;
@@ -15,41 +13,39 @@ export interface UserInfoModelType {
   reducers: {
     changeTree: Reducer<UserInfoModelState>;
     chooseKey: Reducer<UserInfoModelState>;
-
   };
   subscriptions: { setup: Subscription };
 }
-
 
 const UserInfoModel: UserInfoModelType = {
   namespace: 'treeData',
   state: {
     count: [
       {
-        name: "页面",
-        key: "0",
+        name: '页面',
+        key: '0',
         children: [
           {
-            name: "区域",
-            key: "0-0",
+            name: '区域',
+            key: '0-0',
             children: [
               {
-                name: "区块",
-                key: "0-0-0",
+                name: '区块',
+                key: '0-0-0',
                 children: [
                   {
-                    name: "行容器",
-                    key: "0-0-0-0",
-                    type: "rowContainer",
+                    name: '行容器',
+                    key: '0-0-0-0',
+                    type: 'rowContainer',
                     children: [
                       {
-                        name: "列容器",
-                        key: "0-0-0-0-0",
-                        type: "colContainer",
-                        children: []
-                      }
-                    ]
-                  }
+                        name: '列容器',
+                        key: '0-0-0-0-0',
+                        type: 'colContainer',
+                        children: [],
+                      },
+                    ],
+                  },
                 ],
               },
             ],
@@ -57,11 +53,10 @@ const UserInfoModel: UserInfoModelType = {
         ],
       },
     ],
-    chooseKey: '0'
+    chooseKey: '0',
   },
   effects: {
-    *query({ payload }, { call, put }) {
-    },
+    *query({ payload }, { call, put }) {},
   },
   reducers: {
     changeTree(state, action) {
@@ -76,7 +71,6 @@ const UserInfoModel: UserInfoModelType = {
         ...action.payload,
       };
     },
-
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -84,12 +78,11 @@ const UserInfoModel: UserInfoModelType = {
         if (pathname === '/') {
           dispatch({
             type: 'query',
-          })
+          });
         }
       });
-    }
-  }
+    },
+  },
 };
-
 
 export default UserInfoModel;

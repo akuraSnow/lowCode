@@ -2,17 +2,35 @@
   background: rgb(121, 242, 157);
 }
 
-
-.content{
+.content {
   height: 100vh;
   overflow: hidden;
   position: relative;
 
-  aside{
+  aside {
     height: 100vh;
     ul {
       height: 100vh;
     }
   }
-}
 
+  .headerStyle {
+    text-align: 'right';
+    height: 64;
+    padding: 50;
+    line-height: '64px';
+    background-color: '#fff';
+  }
+
+  .contentStyle {
+    text-align: 'center';
+    min-height: 120;
+    line-height: '120px';
+    position: 'relative';
+    overflow: 'hidden';
+
+    :global(.ant-drawer-body) {
+      padding: 0px !important;
+    }
+  }
+}
