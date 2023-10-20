@@ -1,5 +1,5 @@
 import { connect } from 'umi';
-import componentList from '../materialPool/componentList';
+import componentList from '../../materialPool/componentList';
 import styles from './index.less';
 import { operateItem } from '@/utils';
 import Element from './element';
@@ -96,15 +96,17 @@ const ColContainer = (props: any): any => {
   }
 
   function serialized(list: any, key: any) {
-    return list.filter((item: any) => {
-        return (item.type !== 'rowContainer' || item.children.length > 0);
-    }).map((item: any, index: number) => {
-      item.key = key ? key + '-' + index : `${index}`;
-      if (Array.isArray(item.children)) {
-        item.children = serialized(item.children, item.key);
-      }
-      return item;
-    });
+    return list
+      .filter((item: any) => {
+        return item.type !== 'rowContainer' || item.children.length > 0;
+      })
+      .map((item: any, index: number) => {
+        item.key = key ? key + '-' + index : `${index}`;
+        if (Array.isArray(item.children)) {
+          item.children = serialized(item.children, item.key);
+        }
+        return item;
+      });
   }
 
   const operatorBtn = (container: any) => {
@@ -140,7 +142,9 @@ const ColContainer = (props: any): any => {
   return (
     <div
       key={key}
-      className={`${styles.colContainer} ${ chooseKey === key && styles.isChoose}`}
+      className={`${styles.colContainer} ${
+        chooseKey === key && styles.isChoose
+      }`}
       onDrop={(ev) => drop_handler(ev, key)}
       onDragOver={dragover_handler}
       data-name={chooseKey !== key && name}

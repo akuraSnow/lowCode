@@ -7,7 +7,7 @@ export default function CodeEditor(props: any): any {
   console.log('js: ', js);
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Editor language="javascript" value={js} setEditorState={setJs} />
     </div>
   );

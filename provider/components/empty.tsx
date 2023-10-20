@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export default function Empty(props: any) {
-    return <span ></span>;
+  return <span></span>;
 }

@@ -34,13 +34,17 @@ function OperateElement(props: any): any {
   }
 
   function serialized(list: any, key: any) {
-    return list.filter((item: any) => (item.type !== 'rowContainer' || item.children.length > 0)).map((item: any, index: number) => {
-      item.key = key ? key + '-' + index : `${index}`;
-      if (Array.isArray(item.children)) {
-        item.children = serialized(item.children, item.key);
-      }
-      return item;
-    });
+    return list
+      .filter(
+        (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
+      )
+      .map((item: any, index: number) => {
+        item.key = key ? key + '-' + index : `${index}`;
+        if (Array.isArray(item.children)) {
+          item.children = serialized(item.children, item.key);
+        }
+        return item;
+      });
   }
 
   return (
@@ -60,13 +64,14 @@ function OperateElement(props: any): any {
           e.stopPropagation();
           deleteContainer(parentKey);
         }}
-        className={`${styles.deleteBtn} ${chooseKey === dataKey && styles.checkBtn}`}
+        className={`${styles.deleteBtn} ${
+          chooseKey === dataKey && styles.checkBtn
+        }`}
       >
         删除
       </div>
       {children}
     </div>
-
   );
 }
 

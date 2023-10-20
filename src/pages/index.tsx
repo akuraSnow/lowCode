@@ -2,11 +2,13 @@ import styles from './index.less';
 import { connect } from 'umi';
 import { Menu, Drawer, Layout } from 'antd';
 import { useState } from 'react';
-import Container from './layOut/index';
+import Container from './layOut/container/index';
 import OperateList from './operateList/index';
 import Materials from './menuOpretor/menuOperator';
-import { RegisterFormBuilder, iocContainer } from 'dynamic-builder';
+import DataSource from './menuOpretor/dataSource';
+import PropertyBinding from './layOut/propertyBinding/index';
 
+import { RegisterFormBuilder, iocContainer } from 'dynamic-builder';
 import components from '../../provider/components/index';
 
 import {
@@ -16,8 +18,6 @@ import {
   validator,
   RenderProvider,
 } from 'dynamic-provider';
-import CodeEditor from './menuOpretor/codeEditor';
-import DataSource from './menuOpretor/dataSource';
 
 RegisterFormBuilder.use({
   components,
@@ -37,6 +37,8 @@ const headerStyle: any = {
 };
 
 const contentStyle: any = {
+  with: '400px',
+  display: 'flex',
   position: 'relative',
   overflow: 'hidden',
 };
@@ -126,6 +128,7 @@ function IndexPage(props: any) {
               {component}
             </Drawer>
             <Container />
+            <PropertyBinding />
           </Content>
         </Layout>
       </Layout>
