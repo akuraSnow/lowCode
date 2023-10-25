@@ -1,5 +1,5 @@
 import { connect } from 'umi';
-import componentList from '../../materialPool/componentList';
+import componentList from '../../../../lowCode-builder/materialPool/componentList';
 import styles from './index.less';
 import { operateItem } from '@/utils';
 import Element from './element';
@@ -12,13 +12,6 @@ const ColContainer = (props: any): any => {
   } = props;
 
   const { key } = content;
-
-  function chooseContainer(key: any) {
-    dispatch({
-      type: 'treeData/chooseKey',
-      payload: { chooseKey: key },
-    });
-  }
 
   function dragover_handler(e: any) {
     e.preventDefault();
@@ -97,9 +90,9 @@ const ColContainer = (props: any): any => {
 
   function serialized(list: any, key: any) {
     return list
-      .filter((item: any) => {
-        return item.type !== 'rowContainer' || item.children.length > 0;
-      })
+      .filter(
+        (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
+      )
       .map((item: any, index: number) => {
         item.key = key ? key + '-' + index : `${index}`;
         if (Array.isArray(item.children)) {
@@ -129,11 +122,25 @@ const ColContainer = (props: any): any => {
   const showContent = (List: any) => {
     return (List.children || []).map((item: any, index: number) => {
       const element = componentList.filter((k: any) => k.type === item.type);
-      const { component } = element[0];
+      const [{ Component }] = element;
+
+      const initProps = {
+        control: { value: '', event: {}, errorList: [] },
+        field: {
+          id: key,
+          label: '文本',
+          layoutDefinition: {},
+          css: {},
+          dataBinding: { path: '' },
+          ...item,
+        },
+      };
 
       return (
-        <Element key={`${item.key}-${new Date()}`} dataKey={item.key}>
-          <div className={styles.componentItem}>{component}</div>
+        <Element key={`${item.key}-${new Date()}`} dataSource={item}>
+          <div className={styles.componentItem}>
+            <Component {...initProps} />
+          </div>
         </Element>
       );
     });
@@ -148,11 +155,6 @@ const ColContainer = (props: any): any => {
       onDrop={(ev) => drop_handler(ev, key)}
       onDragOver={dragover_handler}
       data-name={chooseKey !== key && name}
-      onClick={(e: any) => {
-        e.preventDefault();
-        e.stopPropagation();
-        chooseContainer.call(this, key);
-      }}
     >
       {operatorBtn(content)}
       <div className={styles.containerSequence}>{showContent(content)}</div>

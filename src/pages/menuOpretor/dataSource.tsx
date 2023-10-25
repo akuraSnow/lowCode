@@ -11,13 +11,13 @@ export default function DataSource(props: any): any {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: '接口数据',
-      children: <div>fff</div>,
+      label: '静态数据',
+      children: <CodeEditor></CodeEditor>,
     },
     {
       key: '2',
-      label: '静态数据',
-      children: <CodeEditor></CodeEditor>,
+      label: '接口数据',
+      children: <div>fff</div>,
     },
     {
       key: '3',

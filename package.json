@@ -26,14 +26,17 @@
     "dynamic-provider": "^0.0.5",
     "file-saver": "^2.0.5",
     "jsonfile": "^6.1.0",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.44.0",
     "react": "17.x",
     "react-codemirror2": "^7.2.1",
     "react-dom": "17.x",
+    "rxjs": "^7.8.1",
     "umi": "^3.5.41"
   },
   "devDependencies": {
     "@types/jsonfile": "^6.1.2",
+    "@types/lodash": "^4.14.200",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@umijs/preset-react": "1.x",

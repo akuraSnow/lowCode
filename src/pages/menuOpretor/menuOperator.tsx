@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.less';
 import { Card } from 'antd';
-
-import componentList from '../materialPool/componentList';
+import componentList from '../../../lowCode-builder/materialPool/componentList';
 
 export default function Materials(props: any): any {
   function domDrugStart(ev: any) {
-    const type = ev.target.getAttribute('type');
+    const type = ev.target.getAttribute('data-type');
     ev.dataTransfer.setData('type', type);
     ev.dataTransfer.dropEffect = 'move';
     props.setOpen(false);
@@ -20,11 +19,13 @@ export default function Materials(props: any): any {
             return (
               <div
                 key={key}
-                {...item}
+                data-type={item.type}
                 className={styles.componentItem}
                 draggable
                 onDragStart={domDrugStart}
-              ></div>
+              >
+                {item.type}
+              </div>
             );
           })}
         </div>

@@ -8,23 +8,9 @@ import Materials from './menuOpretor/menuOperator';
 import DataSource from './menuOpretor/dataSource';
 import PropertyBinding from './layOut/propertyBinding/index';
 
-import { RegisterFormBuilder, iocContainer } from 'dynamic-builder';
-import components from '../../provider/components/index';
+import initBuilder from '../../lowCode-builder/index';
 
-import {
-  converter,
-  extension,
-  // components,
-  validator,
-  RenderProvider,
-} from 'dynamic-provider';
-
-RegisterFormBuilder.use({
-  components,
-  extension,
-  validator,
-  converter,
-}).render(RenderProvider);
+initBuilder();
 
 const { Header, Sider, Content } = Layout;
 

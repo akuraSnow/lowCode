@@ -43,7 +43,14 @@
 .editorContainer {
   border: 1px solid #e0e0e0;
   font-size: 12px;
+  overflow: auto;
+
   :global(.CodeMirror-gutter) {
     width: 29px;
+  }
+
+  :global(.CodeMirror) {
+    overscroll-y: scroll !important;
+    height: auto !important;
   }
 }

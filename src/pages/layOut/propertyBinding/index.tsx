@@ -14,6 +14,7 @@ import 'codemirror/theme/material.css';
 import 'codemirror/theme/mdn-like.css';
 import 'codemirror/theme/the-matrix.css';
 import 'codemirror/theme/night.css';
+import Attribute from './attribute';
 
 const PropertyBinding = (props: any) => {
   const {
@@ -28,13 +29,13 @@ const PropertyBinding = (props: any) => {
   const items = [
     {
       key: '1',
-      label: '事件',
-      children: <Event />,
+      label: '属性',
+      children: <Attribute data={chooseKey} />,
     },
     {
       key: '2',
-      label: '属性',
-      children: 'Content of Tab Pane 2',
+      label: '事件',
+      children: <Event />,
     },
     {
       key: '3',

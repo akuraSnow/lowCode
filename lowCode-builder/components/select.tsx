@@ -8,11 +8,11 @@ const { Option } = FromSelect;
 export default function Select(props: any) {
   const {
     control,
-    field: { dataSourceList },
+    field: { label, dataSourceList },
   } = props;
 
   return (
-    <Form.Item style={{ width: '100% ' }}>
+    <Form.Item label={label} style={{ width: '100% ' }}>
       <FromSelect
         defaultValue={control.value}
         {...control.event}
