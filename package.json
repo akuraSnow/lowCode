@@ -22,8 +22,8 @@
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
     "codemirror": "^5.59.1",
-    "dynamic-builder": "^0.0.6",
-    "dynamic-provider": "^0.0.5",
+    "dynamic-builder": "^0.0.8",
+    "dynamic-provider": "^0.0.10",
     "file-saver": "^2.0.5",
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",

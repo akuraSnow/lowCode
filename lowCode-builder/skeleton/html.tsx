@@ -4,9 +4,11 @@ import Html from '../components/html';
 const HtmlSkeleton = {
   type: 'html',
   label: '文本',
-  labelAction: "function (){\n  return '';\n}\n",
-  visibility: "function (){\n  return '';\n}\n",
-  dataBinding: 'path',
+  labelAction: "function main(){\n  return '';\n}\n",
+  visibility: "function main(){\n  return '';\n}\n",
+  dataBinding: {
+    path: 'path',
+  },
   Component: Html,
 };
 

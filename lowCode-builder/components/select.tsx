@@ -6,6 +6,7 @@ import React from 'react';
 const { Option } = FromSelect;
 
 export default function Select(props: any) {
+  console.log('props: ', props);
   const {
     control,
     field: { label, dataSourceList },

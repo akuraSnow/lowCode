@@ -3,6 +3,7 @@ import componentList from '../../../../lowCode-builder/materialPool/componentLis
 import styles from './index.less';
 import { operateItem } from '@/utils';
 import Element from './element';
+import { memo } from 'react';
 
 const ColContainer = (props: any): any => {
   const {
@@ -24,8 +25,10 @@ const ColContainer = (props: any): any => {
 
     const list = operateItem(count, key, (element: any) => {
       element.children = element.children || [];
+      const key = element.key + '-' + element.children.length;
       element.children.push({
-        key: element.key + '-' + element.children.length,
+        id: `${key.split('-').join('')}${type}`,
+        key,
         type,
       });
       return element;

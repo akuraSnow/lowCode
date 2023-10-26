@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, useEffect, useState } from 'react';
+import React, { HTMLAttributes, memo, useEffect, useState } from 'react';
 import ColContainer from './col';
 import { connect } from 'umi';
 import styles from './index.less';

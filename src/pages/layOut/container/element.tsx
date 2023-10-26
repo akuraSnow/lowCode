@@ -2,13 +2,14 @@ import { connect } from 'umi';
 import { operateItem } from '@/utils';
 import styles from './index.less';
 import { chooseComponentSubject } from '@/services';
+import { memo } from 'react';
 
-function OperateElement(props: any): any {
+const OperateElement = (props: any): any => {
   const {
     children,
     dispatch,
     dataSource,
-    treeData: { count, chooseKey },
+    treeData: { count, chooseKey, functionObj },
   } = props;
 
   const dataKey = dataSource.key;
@@ -30,7 +31,12 @@ function OperateElement(props: any): any {
   }
 
   function chooseElContainer(key: any) {
-    chooseComponentSubject.next(dataSource);
+    chooseComponentSubject.next({
+      ...dataSource,
+      executeJs: functionObj[dataSource.id] || undefined,
+    });
+    console.log('dataSource: ', dataSource);
+    console.log('functionObj: ', functionObj);
     dispatch({
       type: 'treeData/chooseKey',
       payload: { chooseKey: key },
@@ -77,7 +83,7 @@ function OperateElement(props: any): any {
       {children}
     </div>
   );
-}
+};
 
 export default Element = connect(({ treeData }: any) => ({
   treeData,

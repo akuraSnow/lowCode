@@ -4,11 +4,14 @@ import Select from '../components/select';
 const SelectSkeleton = {
   type: 'select',
   label: '文本',
-  labelAction: "function (){\n  return '文本';\n}\n",
-  visibility: "function (){\n  return 'required';\n}\n",
+  dataSource: 'function  main(){\n  return [];\n}\n',
+  labelAction: "function  main(){\n  return '文本';\n}\n",
+  visibility: "function  main(){\n  return 'required';\n}\n",
   metadata: {},
-  dataBinding: 'select',
-  validators: 'function (){\n  return [];\n}\n',
+  dataBinding: {
+    path: 'select',
+  },
+  validators: 'function main(){\n  return [];\n}\n',
   Component: Select,
 };
 

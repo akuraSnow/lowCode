@@ -13,7 +13,7 @@ export default function UnitComponent(props: any) {
       handleForceupdateMethod();
     });
 
-    // return Component.remove(observable);
+    // return () => Component.remove(observable);
   }, []);
 
   return field.visibility !== 'hidden' ? (

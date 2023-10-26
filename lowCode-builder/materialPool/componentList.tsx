@@ -1,13 +1,11 @@
 import skeleton from '../skeleton/index';
-console.log('skeleton: ', skeleton);
-
 let componentList: any = [];
 
 for (const key in skeleton) {
-  console.log('skeleton: ', skeleton[key]);
-
   componentList.push(skeleton[key]);
 }
+
+export default componentList;
 
 export const attributeJson = [
   {
@@ -30,7 +28,32 @@ export const attributeJson = [
       onchange: {
         name: 'changeLabel',
         params: {
-          value: 'label',
+          type: 'label',
+        },
+      },
+    },
+  },
+
+  {
+    id: 'dataSource',
+    type: 'codeeditor',
+    label: 'dataSource',
+    dataBinding: {
+      path: 'dataSource',
+    },
+    layoutDefinition: {
+      row: 1,
+      column: 1,
+      columnSpan: 12,
+      labelCol: 12,
+      wrapperCol: 24,
+      layout: 'vertical',
+    },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'dataSource',
         },
       },
     },
@@ -41,7 +64,7 @@ export const attributeJson = [
     type: 'input',
     label: 'dataBinding',
     dataBinding: {
-      path: 'dataBinding',
+      path: 'path',
     },
     layoutDefinition: {
       row: 2,
@@ -50,6 +73,14 @@ export const attributeJson = [
       labelCol: 12,
       wrapperCol: 24,
       layout: 'vertical',
+    },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'dataBinding',
+        },
+      },
     },
   },
   {
@@ -67,6 +98,14 @@ export const attributeJson = [
       wrapperCol: 24,
       layout: 'vertical',
     },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'labelAction',
+        },
+      },
+    },
   },
   {
     id: 'validators',
@@ -81,6 +120,14 @@ export const attributeJson = [
       columnSpan: 12,
       wrapperCol: 24,
       layout: 'vertical',
+    },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'validators',
+        },
+      },
     },
   },
   {
@@ -97,7 +144,13 @@ export const attributeJson = [
       wrapperCol: 24,
       layout: 'vertical',
     },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'visibility',
+        },
+      },
+    },
   },
 ];
-
-export default componentList;

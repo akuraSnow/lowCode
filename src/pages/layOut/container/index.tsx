@@ -1,28 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import RowContainer from './row';
 import Element from './element';
 import styles from './index.less';
 import { connect } from 'umi';
-import { updateDataSubject } from '@/services';
+import { updateDataSubject, updateFunSubject } from '@/services';
 import { operateItem } from '@/utils';
 
-function Container(props: any) {
+const Container = memo((props: any) => {
   const {
-    treeData: { count, chooseKey },
+    treeData: { count, chooseKey, functionObj },
     dispatch,
   } = props;
 
-  updateDataSubject.subscribe((res: any) => {
-    const newCont = operateItem(count, chooseKey, (element: any, i: any) => {
-      element[res.name] = res.value;
-      return element;
+  useEffect(() => {
+    const a = updateDataSubject.subscribe((res: any) => {
+      console.log('count: ', count);
+
+      const newCont = operateItem(count, chooseKey, (element: any) => {
+        element[res.name] = res.value;
+        return element;
+      });
+
+      dispatch({
+        type: 'treeData/changeTree',
+        payload: { count: newCont },
+      });
     });
 
-    dispatch({
-      type: 'treeData/changeTree',
-      payload: { count: newCont },
+    const b = updateFunSubject.subscribe((res: any) => {
+      const { id, type, value } = res;
+
+      const newFunctionObj = JSON.parse(JSON.stringify(functionObj));
+
+      newFunctionObj[id] = functionObj[id] || {};
+      newFunctionObj[id][type] = value || '';
+      console.log('functionObj: ', newFunctionObj);
+
+      dispatch({
+        type: 'treeData/saveFunction',
+        payload: { functionObj: newFunctionObj },
+      });
     });
+
+    return () => {
+      a.unsubscribe();
+      b.unsubscribe();
+    };
   });
 
   const renderContainer = (count: any) => {
@@ -41,7 +65,7 @@ function Container(props: any) {
   };
 
   return <div className={styles.page}>{renderContainer(count)}</div>;
-}
+});
 
 export default connect(({ treeData }: any) => ({
   treeData,

@@ -9,7 +9,7 @@ import components from './components';
 export default function initBuilder() {
   RegisterFormBuilder.use({
     components,
-    extension: [...extension, ...lowCodeExtension],
+    extension: [...lowCodeExtension, ...extension],
     skeleton: skeleton,
   }).render(RenderProvider);
 }

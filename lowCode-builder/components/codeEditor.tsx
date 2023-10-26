@@ -36,7 +36,7 @@ export default function CodeEditor(props: any) {
         <Editor
           language="javascript"
           height={height}
-          value={value || "function (){\n  return '';\n}\n"}
+          value={value || "function  main(){\n  return '';\n}\n"}
           {...event}
         />
       </Form.Item>

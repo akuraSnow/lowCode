@@ -21,14 +21,26 @@ export function updateFelidJson(fieldsJson: any) {
   return getFields(json);
 }
 
+export function bindExecuteJs(fieldsJson: any, funcObj: any) {
+  return fieldsJson.map((item: any) => {
+    if (funcObj[item.id]) {
+      item = {
+        ...item,
+        ...funcObj[item.id],
+      };
+    }
+    return item;
+  });
+}
+
 function getFields(json: any) {
   let arr: any = [];
   json.forEach((item: any, index: any) => {
     if (!['rowContainer', 'colContainer'].includes(item.type)) {
-      const { key, type, label, row, column, columnSpan } = item;
+      const { id, type, label, row, column, columnSpan } = item;
       arr.push({
-        id: key,
-        type: type,
+        id,
+        type,
         label,
         dataBinding: {
           path: 'a',
