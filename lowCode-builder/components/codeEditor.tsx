@@ -1,6 +1,6 @@
 import { Form, Input as FormInput } from 'antd';
 import React from 'react';
-import Editor from '../../src/pages/menuOpretor/editor';
+import Editor from '../../src/components/menuOpretor/editor';
 
 export default function CodeEditor(props: any) {
   const {

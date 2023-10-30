@@ -20,7 +20,7 @@ class Attribute {
   constructor(props: any) {
     chooseComponentSubject.subscribe((res: any) => {
       const { label, type, executeJs } = res;
-      console.log('res: ', res);
+
       this.componentData = res;
       if (!iocContainer.skeleton.has(type)) {
         this.setJson({
@@ -32,11 +32,11 @@ class Attribute {
           json.hasOwnProperty(item.id),
         );
 
-        // this.viewModel = {
-        //   ...json,
-        //   ...executeJs,
-        //   label
-        // };
+        this.viewModel = {
+          ...json,
+          ...executeJs,
+          label,
+        };
 
         this.setJson({
           fields: jsonData,
@@ -60,9 +60,9 @@ class Attribute {
 
   getData(params: any) {
     const { type } = params;
-    console.log('value: ', type);
-    console.log('value: ', this.target.componentData);
     const { id } = this.target.componentData;
+
+    console.log(this.viewModel);
 
     updateFunSubject.next({
       id,
@@ -74,4 +74,4 @@ class Attribute {
 
 export default connect(({ treeData }: any) => ({
   treeData,
-}))(Attribute);
+}))(Attribute as any);

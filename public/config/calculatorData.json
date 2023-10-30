@@ -1,0 +1,60 @@
+{
+  "fields": [
+    {
+      "id": "addValue",
+      "type": "button",
+      "label": "添加",
+      "metaData": {
+        "type": "primary"
+      },
+      "dataBinding": {
+        "path": "ff"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 1,
+        "columnSpan": 2
+      },
+      "action": {
+        "onclick": {
+          "name": "showModel",
+          "params": {
+            "type": "label"
+          }
+        }
+      }
+    },
+    {
+      "id": "table",
+      "type": "table",
+      "label": "666",
+      "dataBinding": {
+        "path": "premium"
+      },
+      "metaData": {
+        "columns": [
+          {
+            "title": "Name",
+            "dataIndex": "name",
+            "key": "name"
+          },
+          {
+            "title": "Age",
+            "dataIndex": "age",
+            "key": "age"
+          },
+          {
+            "title": "Address",
+            "dataIndex": "address",
+            "key": "address"
+          }
+        ]
+      },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 1,
+        "columnSpan": 12
+      }
+    }
+  ]
+}

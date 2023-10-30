@@ -1,13 +1,29 @@
+import { Menu, Drawer, Layout as LayoutFrom } from 'antd';
+import { connect, history } from 'umi';
+import OperateList from '@/components/operateList';
+import initBuilder from '../../lowCode-builder/index';
+import { updateDataSubject, updateFunSubject } from '@/services';
 import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
-import RowContainer from './row';
-import Element from './element';
 import styles from './index.less';
-import { connect } from 'umi';
-import { updateDataSubject, updateFunSubject } from '@/services';
+
 import { operateItem } from '@/utils';
 
-const Container = memo((props: any) => {
+const { Header, Sider, Content } = LayoutFrom;
+
+const headerStyle: any = {
+  // textAlign: 'right',
+  display: 'flex',
+
+  height: 64,
+  paddingInline: 50,
+  lineHeight: '64px',
+  backgroundColor: '#fff',
+};
+
+initBuilder();
+
+function Layout(props: any) {
   const {
     treeData: { count, chooseKey, functionObj },
     dispatch,
@@ -15,12 +31,12 @@ const Container = memo((props: any) => {
 
   useEffect(() => {
     const a = updateDataSubject.subscribe((res: any) => {
-      console.log('count: ', count);
-
       const newCont = operateItem(count, chooseKey, (element: any) => {
         element[res.name] = res.value;
         return element;
       });
+
+      console.log('newCont: ', newCont);
 
       dispatch({
         type: 'treeData/changeTree',
@@ -49,24 +65,18 @@ const Container = memo((props: any) => {
     };
   });
 
-  const renderContainer = (count: any) => {
-    return count.map((container: any, k: any) => {
-      const { children, type } = container;
-      if (type === 'rowContainer') {
-        return (
-          <Element key={k} dataSource={container}>
-            <RowContainer container={container}></RowContainer>
-          </Element>
-        );
-      }
-
-      return renderContainer(children);
-    });
-  };
-
-  return <div className={styles.page}>{renderContainer(count)}</div>;
-});
+  return (
+    <div className={styles.content}>
+      <LayoutFrom>
+        <Header style={headerStyle}>
+          <OperateList></OperateList>
+        </Header>
+        {props.children}
+      </LayoutFrom>
+    </div>
+  );
+}
 
 export default connect(({ treeData }: any) => ({
   treeData,
-}))(Container);
+}))(Layout);

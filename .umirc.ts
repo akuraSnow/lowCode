@@ -5,8 +5,17 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { path: '/', component: '@/pages/index' },
-    // { path: '/User', component: '@/pages/User' },
+    {
+      path: '/',
+      component: '@/layouts/index',
+      routes: [
+        { path: '/', component: '@/pages/index' },
+        { path: '/data', component: '@/pages/data' },
+        { path: '/visibilityData', component: '@/pages/visibilityData' },
+        { path: '/staticData', component: '@/pages/staticData' },
+        { path: '/calculatorData', component: '@/pages/calculatorData' },
+      ],
+    },
   ],
   fastRefresh: {},
 });

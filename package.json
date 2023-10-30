@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "@ant-design/pro-layout": "^6.5.0",
+    "antd": "^4.24.14",
     "codemirror": "^5.59.1",
     "dynamic-builder": "^0.0.8",
     "dynamic-provider": "^0.0.10",
@@ -28,9 +28,9 @@
     "jsonfile": "^6.1.0",
     "lodash": "^4.17.21",
     "monaco-editor": "^0.44.0",
-    "react": "17.x",
+    "react": "^18.2.0",
     "react-codemirror2": "^7.2.1",
-    "react-dom": "17.x",
+    "react-dom": "^18.2.0",
     "rxjs": "^7.8.1",
     "umi": "^3.5.41"
   },

@@ -1,9 +1,9 @@
 import React, { HTMLAttributes, useState } from 'react';
 import { connect } from 'umi';
-import { Button, Modal, Row, Col, Input, List, Menu } from 'antd';
+import { Button, Modal, Row, Col, Input, List, Menu, Select } from 'antd';
 import styles from './index.less';
-import Editor from '@/pages/menuOpretor/editor';
-import CodeEditor from '@/pages/menuOpretor/codeEditor';
+import Editor from '@/components/menuOpretor/editor';
+import CodeEditor from '@/components/menuOpretor/codeEditor';
 
 const Event = (props: any) => {
   const [open, setOpen] = useState(false);
@@ -38,6 +38,7 @@ const Event = (props: any) => {
       <Button type="primary" onClick={() => setOpen(true)}>
         组件自带事件
       </Button>
+
       <Modal
         title="事件绑定"
         centered
