@@ -1,26 +1,16 @@
-import styles from './index.less';
 import { connect } from 'umi';
-import { Menu, Drawer, Layout } from 'antd';
+import { Menu, Drawer, Layout, Select } from 'antd';
 import { useState } from 'react';
-import Container from './layOut/container/index';
-import OperateList from './operateList/index';
-import Materials from './menuOpretor/menuOperator';
-import DataSource from './menuOpretor/dataSource';
-import PropertyBinding from './layOut/propertyBinding/index';
 
 import initBuilder from '../../lowCode-builder/index';
+import Materials from '@/components/menuOpretor/menuOperator';
+import DataSource from '@/components/menuOpretor/dataSource';
 
-initBuilder();
+import Container from '@/components/layOut/container';
+import PropertyBinding from '@/components/layOut/propertyBinding';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
-
-const headerStyle: any = {
-  textAlign: 'right',
-  height: 64,
-  paddingInline: 50,
-  lineHeight: '64px',
-  backgroundColor: '#fff',
-};
 
 const contentStyle: any = {
   with: '400px',
@@ -85,38 +75,33 @@ function IndexPage(props: any) {
   };
 
   return (
-    <div className={styles.content}>
-      <Layout>
-        <Header style={headerStyle}>
-          <OperateList></OperateList>
-        </Header>
-        <Layout hasSider>
-          <Sider width={100}>
-            <Menu
-              onClick={changeMenu}
-              defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
-              mode="inline"
-              items={items}
-            />
-          </Sider>
-          <Content style={contentStyle}>
-            <Drawer
-              title=""
-              placement="left"
-              closable={true}
-              onClose={onClose}
-              width={width}
-              open={open}
-              mask={false}
-              getContainer={false}
-            >
-              {component}
-            </Drawer>
-            <Container />
-            <PropertyBinding />
-          </Content>
-        </Layout>
+    <div>
+      <Layout hasSider>
+        <Sider width={100}>
+          <Menu
+            onClick={changeMenu}
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            mode="inline"
+            items={items}
+          />
+        </Sider>
+        <Content style={contentStyle}>
+          <Drawer
+            title=""
+            placement="left"
+            closable={true}
+            onClose={onClose}
+            width={width}
+            open={open}
+            mask={false}
+            getContainer={false}
+          >
+            {component}
+          </Drawer>
+          <Container />
+          <PropertyBinding />
+        </Content>
       </Layout>
     </div>
   );

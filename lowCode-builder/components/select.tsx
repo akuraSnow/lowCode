@@ -6,19 +6,24 @@ import React from 'react';
 const { Option } = FromSelect;
 
 export default function Select(props: any) {
-  console.log('props: ', props);
   const {
     control,
-    field: { label, dataSourceList },
+    field: { label, dataSourceList = [] },
   } = props;
 
   return (
     <Form.Item label={label} style={{ width: '100% ' }}>
       <FromSelect
+        getPopupContainer={(triggerNode) => triggerNode.parentNode}
         defaultValue={control.value}
         {...control.event}
-        options={dataSourceList}
-      />
+      >
+        {dataSourceList.map(({ value, label }: any, index: number) => (
+          <FromSelect.Option key={index} value={value}>
+            {label}
+          </FromSelect.Option>
+        ))}
+      </FromSelect>
     </Form.Item>
   );
 }

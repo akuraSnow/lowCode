@@ -2,7 +2,6 @@ import { connect } from 'umi';
 import { operateItem } from '@/utils';
 import styles from './index.less';
 import { chooseComponentSubject } from '@/services';
-import { memo } from 'react';
 
 const OperateElement = (props: any): any => {
   const {
@@ -35,8 +34,7 @@ const OperateElement = (props: any): any => {
       ...dataSource,
       executeJs: functionObj[dataSource.id] || undefined,
     });
-    console.log('dataSource: ', dataSource);
-    console.log('functionObj: ', functionObj);
+
     dispatch({
       type: 'treeData/chooseKey',
       payload: { chooseKey: key },
@@ -85,6 +83,6 @@ const OperateElement = (props: any): any => {
   );
 };
 
-export default Element = connect(({ treeData }: any) => ({
+export default connect(({ treeData }: any) => ({
   treeData,
 }))(OperateElement);

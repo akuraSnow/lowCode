@@ -2,7 +2,7 @@ import React, { HTMLAttributes, memo, useEffect, useState } from 'react';
 import ColContainer from './col';
 import { connect } from 'umi';
 import styles from './index.less';
-import Element from './element';
+import ElementContainer from './element';
 import { operateItem } from '@/utils';
 import { updateDataSubject } from '@/services';
 
@@ -25,9 +25,9 @@ const RowContainer = (props: any) => {
       <div className={styles.colContent}>
         {(children || []).map((content: any, i: any) => {
           return (
-            <Element key={`${i}-${new Date()}`} dataSource={content}>
+            <ElementContainer key={`${i}-${new Date()}`} dataSource={content}>
               <ColContainer content={content}></ColContainer>
-            </Element>
+            </ElementContainer>
           );
         })}
       </div>

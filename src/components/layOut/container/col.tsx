@@ -2,7 +2,7 @@ import { connect } from 'umi';
 import componentList from '../../../../lowCode-builder/materialPool/componentList';
 import styles from './index.less';
 import { operateItem } from '@/utils';
-import Element from './element';
+import ElementContainer from './element';
 import { memo } from 'react';
 
 const ColContainer = (props: any): any => {
@@ -140,11 +140,11 @@ const ColContainer = (props: any): any => {
       };
 
       return (
-        <Element key={`${item.key}-${new Date()}`} dataSource={item}>
+        <ElementContainer key={`${item.key}-${new Date()}`} dataSource={item}>
           <div className={styles.componentItem}>
             <Component {...initProps} />
           </div>
-        </Element>
+        </ElementContainer>
       );
     });
   };
