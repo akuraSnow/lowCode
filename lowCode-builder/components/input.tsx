@@ -6,7 +6,11 @@ export default function Input(props: any) {
     control: { value, event, errorList },
     field: {
       label,
-      layoutDefinition: { labelCol, wrapperCol, layout = 'horizontal' },
+      layoutDefinition: {
+        labelCol = 8,
+        wrapperCol = 16,
+        layout = 'horizontal',
+      },
     },
   } = props;
 

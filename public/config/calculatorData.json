@@ -7,9 +7,6 @@
       "metaData": {
         "type": "primary"
       },
-      "dataBinding": {
-        "path": "ff"
-      },
       "layoutDefinition": {
         "row": 0,
         "column": 1,
@@ -28,9 +25,6 @@
       "id": "table",
       "type": "table",
       "dataSource": "getCalculatorData",
-      "dataBinding": {
-        "path": "premium"
-      },
       "metaData": {
         "columns": [
           {
@@ -68,15 +62,11 @@
     {
       "id": "model111",
       "type": "modal",
-      "labelAction": "getModelLabel",
       "dataSource": "getCalculatorData",
-      "dataBinding": {
-        "path": "model1"
-      },
       "metaData": {
         "title": "编辑",
         "open": false,
-        "jsonName": "config/home.json",
+        "jsonName": "config/editCalculator.json",
         "onOk": "handleCancel",
         "onCancel": "handleCancel"
       },

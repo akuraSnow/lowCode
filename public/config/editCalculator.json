@@ -1,0 +1,40 @@
+{
+  "fields": [
+    {
+      "id": "input",
+      "type": "input",
+      "label": "验证名",
+      "dataBinding": {
+        "path": "name"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "labelCol": 4,
+        "wrapperCol": 16,
+        "columnSpan": 12
+      }
+    },
+    {
+      "id": "input",
+      "type": "codeeditor",
+      "label": "代码段",
+      "dataBinding": {
+        "path": "code"
+      },
+      "validator": [],
+      "layoutDefinition": {
+        "row": 1,
+        "column": 0,
+        "labelCol": 4,
+        "wrapperCol": 16,
+        "columnSpan": 12
+      }
+    }
+  ],
+  "actions": {
+    "load": {
+      "name": "getCalData"
+    }
+  }
+}

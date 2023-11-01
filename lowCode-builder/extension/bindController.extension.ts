@@ -1,7 +1,4 @@
 import { get, set } from 'lodash';
-// import { Extend } from '../../dynamic/extension';
-// import { iocContainer } from '../../dynamic/builder';
-
 import { Extend, iocContainer } from 'dynamic-builder';
 
 export default class BindController extends Extend {
@@ -43,13 +40,14 @@ class Control {
 
   publishEvent(eventType: string, val: any) {
     const value = val.target ? val.target.value : val;
-    const {
-      action,
-      dataBinding: { path, converter },
-    } = this.field;
-    const newValue = this.converterExtension(converter, value, 'set');
+    const { action, dataBinding } = this.field;
 
-    set(this._viewModel, path, newValue);
+    if (dataBinding && dataBinding.path) {
+      const { path, converter } = dataBinding;
+
+      const newValue = this.converterExtension(converter, value, 'set');
+      set(this._viewModel, path, newValue);
+    }
 
     for (const key in action) {
       if (Object.prototype.hasOwnProperty.call(action, key)) {
@@ -106,16 +104,21 @@ class Control {
   }
 
   get value() {
+    if (!this.field.dataBinding) {
+      return undefined;
+    }
+
     const {
-      dataBinding: { converter },
+      dataBinding: { converter, path },
       validator,
     } = this.field;
-    const value = get(this._viewModel, this.field.dataBinding.path);
+
+    const value = get(this._viewModel, path);
+
     this._errorList = (validator || [])
-      .map((item: any) => {
-        return this.validatorExtension(item.name, value);
-      })
+      .map((item: any) => this.validatorExtension(item.name, value))
       .filter((e: any) => e);
+
     return this.converterExtension(converter, value, 'get');
   }
 

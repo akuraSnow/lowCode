@@ -12,16 +12,16 @@ export default class CalculatorData {
   private label = '新增';
 
   constructor(props: any) {
-    // this.viewModel = {
-    //   model1: fa
-    // };
+    this.viewModel = {
+      model1: {},
+    };
   }
 
   showModel(params: any) {
     console.log(
       'params: ',
       this.target.updateField([
-        { id: 'model111', metaData: { title: 'fff', open: true } },
+        { id: 'model111', metaData: { title: '新增', open: true } },
       ]),
     );
     // this.viewModel.model1 = true;
@@ -41,28 +41,53 @@ export default class CalculatorData {
     ]);
   }
 
+  getCalData(res: any) {
+    console.log('res: ', res);
+
+    return Promise.resolve([
+      {
+        key: '1',
+        name: 'required',
+        firstName: 'fdf',
+        content: 32,
+        operate: <div>fff</div>,
+      },
+    ]);
+  }
+
   openModels(res: any) {
     console.log('res: ', res);
-    console.log('openModels', this);
+    console.log('openModels', this.viewModel);
 
     this.target.updateField([
       {
-        id: 'table',
+        id: 'model111',
         metaData: {
           open: true,
-          title: '111',
+          title: '编辑',
         },
       },
     ]);
-    // this.viewModel.model1 = true;
   }
 
   calculatorDataBtn() {
     return <div>fdfsadsd</div>;
   }
 
-  handleCancel(params: any) {
-    this.viewModel.model1 = false;
+  handleCancel(params: any, self: any) {
+    console.log('params: ', params);
+    console.log('self: ', self);
+
+    // this.viewModel
+    console.log('this.viewModel: ', this.viewModel);
+    this.target.updateField([
+      {
+        id: 'model111',
+        metaData: {
+          open: false,
+        },
+      },
+    ]);
   }
 
   getModelLabel() {

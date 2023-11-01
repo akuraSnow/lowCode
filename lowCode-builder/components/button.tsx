@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Button(props: any) {
   const {
-    control: { value, event, errorList },
+    control: { event },
     field: { label = '', metaData: { type = 'primary' } = {} },
   } = props;
 
