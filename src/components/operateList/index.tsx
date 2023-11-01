@@ -5,7 +5,7 @@ import { Button, Drawer, Space } from 'antd';
 import Home from './previewInterface';
 import React from 'react';
 import { bindExecuteJs, updateFelidJson } from '@/utils';
-import './index.less';
+import styles from './index.less';
 
 import {
   AppstoreOutlined,
@@ -29,6 +29,20 @@ function OperateList(props: any) {
     let fields = updateFelidJson(count);
     fields = bindExecuteJs(fields, functionObj);
     console.log('fields: ', fields);
+
+    fetch('http://localhost:3000/saveJson', {
+      method: 'POST',
+      body: JSON.stringify(fields),
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      credentials: 'same-origin',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data: ', data);
+      });
 
     sessionStorage.setItem('name', JSON.stringify(fields));
     setOpen(true);
@@ -67,14 +81,6 @@ function OperateList(props: any) {
         },
       ],
     },
-    {
-      label: (
-        <Button type="primary" onClick={showModal}>
-          预览
-        </Button>
-      ),
-      key: 'alipay',
-    },
   ];
 
   return (
@@ -85,6 +91,12 @@ function OperateList(props: any) {
         mode="horizontal"
         items={items}
       />
+
+      <div className={styles.preview}>
+        <Button type="primary" onClick={showModal}>
+          预览
+        </Button>
+      </div>
 
       <Drawer
         width="100%"

@@ -16,7 +16,6 @@ const Container = memo((props: any) => {
       const { children, type } = container;
       if (type === 'rowContainer') {
         return (
-          // <RowContainer  key={k} container={container}></RowContainer>
           <ElementContainer key={k} dataSource={container}>
             <RowContainer container={container}></RowContainer>
           </ElementContainer>

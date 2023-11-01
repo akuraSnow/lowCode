@@ -1,0 +1,14 @@
+[
+  {
+    "id": "000000select",
+    "type": "select",
+    "dataBinding": {
+      "path": "a"
+    },
+    "layoutDefinition": {
+      "row": 0,
+      "column": 0,
+      "columnSpan": 12
+    }
+  }
+]

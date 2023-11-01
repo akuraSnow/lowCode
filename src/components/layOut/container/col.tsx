@@ -140,7 +140,6 @@ const ColContainer = (props: any): any => {
       };
 
       return (
-        // <Component {...initProps} />
         <ElementContainer key={`${item.key}-${new Date()}`} dataSource={item}>
           <div className={styles.componentItem}>
             <Component {...initProps} />
