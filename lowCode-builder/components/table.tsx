@@ -1,9 +1,11 @@
 import React from 'react';
 import { Table as TableForm } from 'antd';
 
+const { Column, ColumnGroup } = TableForm;
+
 export default function Table(props: any) {
   const {
-    control,
+    control: { target, event },
     field: {
       label,
       dataSourceList = [],
@@ -11,9 +13,48 @@ export default function Table(props: any) {
     },
   } = props;
 
+  const operationBtn = (e: any, record: any) => {
+    target.executeAction(e.name, record);
+  };
+
+  const ColumnSpan = (item: any) => {
+    const { title, key, dataIndex, render: renderFun = undefined } = item;
+    return (
+      <Column
+        title={title}
+        dataIndex={dataIndex}
+        key={key}
+        render={
+          renderFun
+            ? (_, record: any) => {
+                return renderFun.map((item: any) => (
+                  <a
+                    key={record.key}
+                    dangerouslySetInnerHTML={{ __html: item.element }}
+                    onClick={operationBtn.bind(this, item.onclick, record)}
+                  ></a>
+                ));
+              }
+            : undefined
+        }
+      />
+    );
+  };
+
   return (
     <div style={{ width: '100%' }}>
-      <TableForm columns={columns} dataSource={dataSourceList} />
+      <TableForm dataSource={dataSourceList}>
+        {columns.map((item: any, index: number) => {
+          if (item.children && item.children.length > 0) {
+            return (
+              <ColumnGroup key={index} title={item.title}>
+                {item.children.map((res: any, i: number) => ColumnSpan(res))}
+              </ColumnGroup>
+            );
+          }
+          return ColumnSpan(item);
+        })}
+      </TableForm>
     </div>
   );
 }

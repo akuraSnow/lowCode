@@ -9,12 +9,10 @@ import styles from './index.less';
 
 import { operateItem } from '@/utils';
 
-const { Header, Sider, Content } = LayoutFrom;
+const { Header } = LayoutFrom;
 
 const headerStyle: any = {
-  // textAlign: 'right',
   display: 'flex',
-
   height: 64,
   paddingInline: 50,
   lineHeight: '64px',

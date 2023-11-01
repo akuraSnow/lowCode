@@ -5,10 +5,8 @@ export default function Input(props: any) {
   const {
     control: { value, event, errorList },
     field: {
-      id,
       label,
       layoutDefinition: { labelCol, wrapperCol, layout = 'horizontal' },
-      dataBinding: { path },
     },
   } = props;
 
