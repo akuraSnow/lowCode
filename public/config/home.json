@@ -6,8 +6,7 @@
       "label": "666",
       "labelAction": "getInputAction",
       "dataBinding": {
-        "path": "premium",
-        "converter": "convertLblPaymentAmount"
+        "path": "premium"
       },
       "layoutDefinition": {
         "row": 1,

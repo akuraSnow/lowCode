@@ -6,13 +6,13 @@ export default function RenderProvider(source: any, Component: any) {
   const [children, setChildren] = useState([]);
 
   useEffect(() => {
-    source.subscribe({
+    const observable = source.subscribe({
       next: (v: any) => {
+        console.log('v: ', v);
         setChildren(v.data);
       },
     });
-
-    // return () => source.unsubscribe();
+    return () => observable.unsubscribe();
   }, []);
 
   const columns = (item: any, index: number): React.ReactNode => {

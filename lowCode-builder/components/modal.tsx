@@ -17,7 +17,7 @@ const Modal = (props: any) => {
     target.executeAction(name, params);
   };
 
-  console.log('jsonName: ', jsonName);
+  console.log('jsonName: ', props.field.metaData);
 
   let title = labelAction ? executeAction(labelAction) : label;
 
@@ -26,7 +26,6 @@ const Modal = (props: any) => {
       <ModalBuilder
         {...props.field.metaData}
         title={title}
-        open={value}
         onOk={() => executeAction(onOk)}
         onCancel={() => executeAction(onCancel)}
         footer={
@@ -45,7 +44,7 @@ const Modal = (props: any) => {
           })
         }
       >
-        {React.createElement(ModelContent as any, { name: 'li' })}
+        {React.createElement(ModelContent as any, { jsonName, target })}
       </ModalBuilder>
     </>
   );
@@ -53,12 +52,18 @@ const Modal = (props: any) => {
 
 export default Modal;
 
-@PageFormBuilder({
-  jsonName: 'config/home.json',
-  provider: [],
-})
+@PageFormBuilder({})
 class ModelContent {
   [x: string]: any;
 
-  constructor(props: any) {}
+  constructor(props: any) {
+    console.log('props: ', props);
+
+    setTimeout(() => {
+      this.loadJson({
+        jsonName: props.jsonName,
+      });
+      // this.target = props.target.target;
+    });
+  }
 }

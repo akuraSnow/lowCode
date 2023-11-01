@@ -66,7 +66,7 @@
     },
 
     {
-      "id": "table",
+      "id": "model111",
       "type": "modal",
       "labelAction": "getModelLabel",
       "dataSource": "getCalculatorData",
@@ -75,6 +75,7 @@
       },
       "metaData": {
         "title": "编辑",
+        "open": false,
         "jsonName": "config/home.json",
         "onOk": "handleCancel",
         "onCancel": "handleCancel"

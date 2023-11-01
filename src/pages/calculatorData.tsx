@@ -18,8 +18,13 @@ export default class CalculatorData {
   }
 
   showModel(params: any) {
-    console.log('params: ', params);
-    this.viewModel.model1 = true;
+    console.log(
+      'params: ',
+      this.target.updateField([
+        { id: 'model111', metaData: { title: 'fff', open: true } },
+      ]),
+    );
+    // this.viewModel.model1 = true;
   }
 
   getCalculatorData(res: any) {
@@ -39,8 +44,17 @@ export default class CalculatorData {
   openModels(res: any) {
     console.log('res: ', res);
     console.log('openModels', this);
-    this.target.label = '编辑';
-    this.viewModel.model1 = true;
+
+    this.target.updateField([
+      {
+        id: 'table',
+        metaData: {
+          open: true,
+          title: '111',
+        },
+      },
+    ]);
+    // this.viewModel.model1 = true;
   }
 
   calculatorDataBtn() {
@@ -54,5 +68,9 @@ export default class CalculatorData {
   getModelLabel() {
     console.log('this.target: ', this);
     return this.target.label;
+  }
+
+  getInputAction() {
+    return 'fdfd';
   }
 }

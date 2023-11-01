@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "concurrently \"pm2 start serve/index.js --watch\" \"umi dev\" ",
+    "start": "concurrently \"npx pm2 start serve/index.js --watch\" \"umi dev\" ",
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -25,7 +25,7 @@
     "codemirror": "^5.59.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
-    "dynamic-builder": "^0.1.0",
+    "dynamic-builder": "^0.1.2",
     "dynamic-provider": "0.0.11",
     "express": "^4.18.2",
     "file-saver": "^2.0.5",
