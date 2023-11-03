@@ -75,11 +75,6 @@ export default class CalculatorData {
   }
 
   handleCancel(params: any, self: any) {
-    console.log('params: ', params);
-    console.log('self: ', self);
-
-    // this.viewModel
-    console.log('this.viewModel: ', this.viewModel);
     this.target.updateField([
       {
         id: 'model111',
@@ -88,11 +83,6 @@ export default class CalculatorData {
         },
       },
     ]);
-  }
-
-  getModelLabel() {
-    console.log('this.target: ', this);
-    return this.target.label;
   }
 
   getInputAction() {

@@ -7,8 +7,6 @@ const Modal = (props: any) => {
   const {
     control: { target, value },
     field: {
-      label,
-      labelAction,
       metaData: { onOk, onCancel, footer, jsonName },
     },
   } = props;
@@ -56,20 +54,20 @@ class ModelContent {
   [x: string]: any;
 
   constructor(props: any) {
-    console.log('props: ', props);
+    this.content = props;
+  }
 
-    setTimeout(() => {
-      const { jsonName, target, value } = props;
-      console.log('value: ', value);
-      this.loadJson({
-        jsonName,
-      });
-
-      for (const key in target) {
-        if (Object.prototype.hasOwnProperty.call(target, key)) {
-          this.target[key] = target[key];
-        }
-      }
-    });
+  componentDidMount() {
+    // const { jsonName, target: { target }, value } = this.target.content;
+    // console.log('value: ', value);
+    // this.loadJson({
+    //   jsonName,
+    // });
+    // for (const key in target) {
+    //   if (Object.prototype.hasOwnProperty.call(target, key)) {
+    //     this.target[key] = target[key];
+    //   }
+    // }
+    // console.log(this.target);
   }
 }

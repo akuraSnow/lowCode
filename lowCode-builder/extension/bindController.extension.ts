@@ -42,18 +42,20 @@ class Control {
     const value = val.target ? val.target.value : val;
     const { action, dataBinding } = this.field;
 
-    if (dataBinding && dataBinding.path) {
-      const { path, converter } = dataBinding;
+    if (action && action[eventType]) {
+      if (dataBinding && dataBinding.path) {
+        const { path, converter } = dataBinding;
 
-      const newValue = this.converterExtension(converter, value, 'set');
-      set(this._viewModel, path, newValue);
-    }
+        const newValue = this.converterExtension(converter, value, 'set');
+        set(this._viewModel, path, newValue);
+      }
 
-    for (const key in action) {
-      if (Object.prototype.hasOwnProperty.call(action, key)) {
-        const { name, params } = action[key];
-        if (eventType === key) {
-          this.target.executeAction(name, params);
+      for (const key in action) {
+        if (Object.prototype.hasOwnProperty.call(action, key)) {
+          const { name, params } = action[key];
+          if (eventType === key) {
+            this.target.executeAction(name, params);
+          }
         }
       }
     }
@@ -75,16 +77,12 @@ class Control {
     return result === value ? value : result[operator](value);
   }
 
-  validatorExtension(validatorName: string, value: any) {
-    if (!validatorName) {
+  validatorExtension(name: string, value: any) {
+    if (!name) {
       return null;
     }
     return this.findExecuteFunction(
-      {
-        name: validatorName,
-        value,
-        extensionName: 'validator',
-      },
+      { name, value, extensionName: 'validator' },
       null,
     );
   }
