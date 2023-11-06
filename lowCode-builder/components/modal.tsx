@@ -7,12 +7,14 @@ const Modal = (props: any) => {
   const {
     control: { target, value },
     field: {
-      metaData: { onOk, onCancel, footer, jsonName },
+      metaData: { onOk, onCancel, footer, jsonName, functions },
     },
   } = props;
 
-  const executeAction = (name, params?) => {
-    target.executeAction(name, params);
+  const [closeViewModel, setCloseViewModel] = useState(undefined as any);
+
+  const executeAction = (name: any, params?: any) => {
+    target.executeAction(name, closeViewModel);
   };
 
   return (
@@ -40,6 +42,7 @@ const Modal = (props: any) => {
         {React.createElement(ModelContent as any, {
           jsonName,
           target,
+          setCloseViewModel,
           viewModel: value,
         })}
       </ModalBuilder>
@@ -54,20 +57,16 @@ class ModelContent {
   [x: string]: any;
 
   constructor(props: any) {
-    this.content = props;
+    this.parent = props;
+    const { viewModel = {}, jsonName, target: fatherComponent } = props;
+    this.props = fatherComponent.target;
+    this.viewModel = viewModel;
+    this.loadJson({
+      jsonName,
+    });
   }
 
-  componentDidMount() {
-    // const { jsonName, target: { target }, value } = this.target.content;
-    // console.log('value: ', value);
-    // this.loadJson({
-    //   jsonName,
-    // });
-    // for (const key in target) {
-    //   if (Object.prototype.hasOwnProperty.call(target, key)) {
-    //     this.target[key] = target[key];
-    //   }
-    // }
-    // console.log(this.target);
+  componentDidUpdate() {
+    this.parent.setCloseViewModel(() => this.viewModel);
   }
 }

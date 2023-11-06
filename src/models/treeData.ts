@@ -45,6 +45,39 @@ const UserInfoModel: UserInfoModelType = {
                         name: '列容器',
                         key: '0-0-0-0-0',
                         type: 'colContainer',
+                        children: [
+                          {
+                            name: '行容器',
+                            key: '0-0-0-0-0-0',
+                            type: 'rowContainer',
+                            children: [
+                              {
+                                name: '列容器',
+                                key: '0-0-0-0-0-0-0',
+                                type: 'colContainer',
+                                children: [],
+                              },
+                            ],
+                          },
+                          {
+                            name: '行容器',
+                            key: '0-0-0-0-0-1',
+                            type: 'rowContainer',
+                            children: [
+                              {
+                                name: '列容器',
+                                key: '0-0-0-0-0-1-0',
+                                type: 'colContainer',
+                                children: [],
+                              },
+                            ],
+                          },
+                        ],
+                      },
+                      {
+                        name: '列容器',
+                        key: '0-0-0-0-1',
+                        type: 'colContainer',
                         children: [],
                       },
                     ],

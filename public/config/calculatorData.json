@@ -62,7 +62,9 @@
     {
       "id": "model111",
       "type": "modal",
-      "dataSource": "getCalculatorData",
+      "dataBinding": {
+        "path": "modal1"
+      },
       "metaData": {
         "title": "编辑",
         "open": false,

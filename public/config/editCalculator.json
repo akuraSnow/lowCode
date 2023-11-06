@@ -31,10 +31,5 @@
         "columnSpan": 12
       }
     }
-  ],
-  "actions": {
-    "load": {
-      "name": "getCalData"
-    }
-  }
+  ]
 }

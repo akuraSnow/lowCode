@@ -9,22 +9,17 @@ import { PageFormBuilder } from 'dynamic-builder';
 export default class CalculatorData {
   [x: string]: any;
 
-  private label = '新增';
-
-  constructor(props: any) {
-    this.viewModel = {
-      model1: {},
-    };
-  }
+  constructor(props: any) {}
 
   showModel(params: any) {
-    console.log(
-      'params: ',
-      this.target.updateField([
-        { id: 'model111', metaData: { title: '新增', open: true } },
-      ]),
-    );
-    // this.viewModel.model1 = true;
+    this.viewModel.modal1 = {
+      name: 'fdf',
+      code: 'ddddd',
+    };
+
+    this.updateField([
+      { id: 'model111', metaData: { title: '新增', open: true } },
+    ]);
   }
 
   getCalculatorData(res: any) {
@@ -59,7 +54,7 @@ export default class CalculatorData {
     console.log('res: ', res);
     console.log('openModels', this.viewModel);
 
-    this.target.updateField([
+    this.updateField([
       {
         id: 'model111',
         metaData: {
@@ -75,7 +70,7 @@ export default class CalculatorData {
   }
 
   handleCancel(params: any, self: any) {
-    this.target.updateField([
+    this.updateField([
       {
         id: 'model111',
         metaData: {
