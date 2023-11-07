@@ -9,35 +9,23 @@ import { updateDataSubject } from '@/services';
 const RowContainer = (props: any) => {
   const {
     container,
-    dispatch,
     treeData: { count, chooseKey },
+    children,
   } = props;
-  const { children, key } = container;
+  const { children: child, key } = container;
 
   return (
-    <div
-      key={key}
-      className={`${styles.rowContainer} ${
-        chooseKey === key && styles.isChoose
-      }`}
-      draggable={false}
-    >
-      <div className={styles.colContent}>
-        {(children || []).map((content: any, i: any) => {
-          if (
-            content?.children &&
-            content?.children[0]?.children[0] === 'colContainer'
-          ) {
-            return <ColContainer key={k} content={content}></ColContainer>;
-          }
-          return (
-            <ElementContainer key={`${i}-${new Date()}`} dataSource={content}>
-              <ColContainer content={content}></ColContainer>
-            </ElementContainer>
-          );
-        })}
+    children && (
+      <div
+        key={key}
+        className={`${styles.rowContainer} ${
+          chooseKey === key && styles.isChoose
+        }`}
+        draggable={false}
+      >
+        {children}
       </div>
-    </div>
+    )
   );
 };
 

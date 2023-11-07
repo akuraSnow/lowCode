@@ -5,9 +5,12 @@ export function operateItem(list: any[], key: any, fn: any) {
 
 export function serialized(list: any, key: any) {
   return list
-    .filter(
-      (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
-    )
+    .filter((item: any) => {
+      return (
+        !['rowContainer', 'colContainer'].includes(item.type) ||
+        item.children.length > 0
+      );
+    })
     .map((item: any, index: number) => {
       item.key = key ? key + '-' + index : `${index}`;
       if (Array.isArray(item.children)) {
@@ -15,6 +18,60 @@ export function serialized(list: any, key: any) {
       }
       return item;
     });
+}
+
+export function getInitJson(
+  { type: ownerType, key, children }: any,
+  type: string,
+) {
+  return {
+    key,
+    type,
+    children: [
+      { key: key + '-0', type: ownerType, children: children },
+      { key: key + '-1', type: 'container', children: [] },
+    ],
+  };
+}
+
+export function cuttingModule(key: string, count: any[], type: string) {
+  const includesType =
+    type === 'rowContainer'
+      ? ['colContainer', undefined]
+      : ['colContainer', 'rowContainer'];
+  const keyList = key.split('-');
+  const order = keyList[keyList.length - 1];
+  const parentKey = keyList.splice(0, keyList.length - 1).join('-');
+
+  let newKey;
+  let newCont;
+
+  newCont = operateItem(count, parentKey, (element: any) => {
+    const { key, type: ownerType } = element.children[order];
+    newKey = key + '-0';
+
+    if (includesType.includes(element.type)) {
+      element.children.splice(
+        Number(order),
+        1,
+        getInitJson(element.children[order], type),
+      );
+      return element;
+    }
+
+    element.children = element.children || [];
+    element.children.splice(Number(order) + 1, 0, {
+      key: element.key + '-' + element.children.length,
+      type: 'container',
+      children: [],
+    });
+    return element;
+  });
+
+  return {
+    newKey,
+    newCont,
+  };
 }
 
 function nestedObject(arr: any, findKey: any, fn: any) {

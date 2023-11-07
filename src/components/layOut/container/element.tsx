@@ -1,9 +1,10 @@
 import { connect } from 'umi';
-import { operateItem, serialized } from '@/utils';
-import styles from './index.less';
+import { operateItem, serialized, getInitJson, cuttingModule } from '@/utils';
 import { chooseComponentSubject } from '@/services';
+import styles from './index.less';
+import { cloneDeep } from 'lodash';
 
-const OperateElement = (props: any): any => {
+const ElementContainer = (props: any): any => {
   const {
     children,
     dispatch,
@@ -30,6 +31,7 @@ const OperateElement = (props: any): any => {
   }
 
   function chooseElContainer(key: any) {
+    console.log('key: ', key);
     chooseComponentSubject.next({
       ...dataSource,
       executeJs: functionObj[dataSource.id] || undefined,
@@ -41,34 +43,88 @@ const OperateElement = (props: any): any => {
     });
   }
 
+  function onVerticalCut(container: any) {
+    const { newCont, newKey } = cuttingModule(
+      container.key,
+      count,
+      'rowContainer',
+    );
+
+    dispatch({
+      type: 'treeData/changeTree',
+      payload: { count: serialized(newCont, ''), chooseKey: newKey },
+    });
+  }
+
+  function onCrossCut(container: any) {
+    const { newCont, newKey } = cuttingModule(
+      container.key,
+      count,
+      'colContainer',
+    );
+
+    dispatch({
+      type: 'treeData/changeTree',
+      payload: { count: serialized(newCont, ''), chooseKey: newKey },
+    });
+  }
+
+  const operatorBtn = (container: any) => {
+    return (
+      chooseKey === dataKey && (
+        <>
+          <span
+            className={styles.verticalCut}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onVerticalCut(container);
+            }}
+          ></span>
+          <span
+            className={styles.crossCut}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCrossCut(container);
+            }}
+          ></span>
+        </>
+      )
+    );
+  };
+
   return (
-    <div
-      className={`${styles.itemContainer} ${
-        chooseKey === dataKey && styles.chooseBtn
-      }`}
-      onClick={(e: any) => {
-        e.preventDefault();
-        e.stopPropagation();
-        chooseElContainer(dataKey);
-      }}
-    >
+    children && (
       <div
+        className={`${styles.itemContainer} ${
+          chooseKey === dataKey && styles.chooseBtn
+        }`}
         onClick={(e: any) => {
           e.preventDefault();
           e.stopPropagation();
-          deleteContainer(parentKey);
+          chooseElContainer(dataKey);
         }}
-        className={`${styles.deleteBtn} ${
-          chooseKey === dataKey && styles.checkBtn
-        }`}
       >
-        删除
+        {operatorBtn(dataSource)}
+        <div
+          onClick={(e: any) => {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteContainer(parentKey);
+          }}
+          className={`${styles.deleteBtn} ${
+            chooseKey === dataKey && styles.checkBtn
+          }`}
+        >
+          删除
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
+    )
   );
 };
 
 export default connect(({ treeData }: any) => ({
   treeData,
-}))(OperateElement);
+}))(ElementContainer);

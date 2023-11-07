@@ -3,11 +3,13 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { operateItem, serialized } from '@/utils';
 import RowContainer from './row';
+import ColContainer from './col';
+import Container from './container';
 import ElementContainer from './element';
 import styles from './index.less';
 import { connect } from 'umi';
 
-const Container = memo((props: any) => {
+const Content = memo((props: any) => {
   const {
     treeData: { count, chooseKey, functionObj },
     dispatch,
@@ -16,17 +18,10 @@ const Container = memo((props: any) => {
   function addComponent(container: any) {
     let newCont = operateItem(count, '0-0-0', (element: any, i: any) => {
       element.children.push({
-        name: '行容器',
+        name: '容器',
         key: element.key + '-' + element.children.length,
-        type: 'rowContainer',
-        children: [
-          {
-            name: '列容器',
-            key: element.key + '-' + element.children.length + '-' + '0',
-            type: 'colContainer',
-            children: [],
-          },
-        ],
+        type: 'container',
+        children: [],
       });
 
       return element;
@@ -43,8 +38,24 @@ const Container = memo((props: any) => {
       const { children, type } = container;
       if (type === 'rowContainer') {
         return (
-          <ElementContainer key={k} dataSource={container}>
-            <RowContainer container={container}></RowContainer>
+          <ElementContainer key={`${k}-${new Date()}`} dataSource={container}>
+            <RowContainer key={`${k}-${new Date()}`} container={container}>
+              {renderContainer(children)}
+            </RowContainer>
+          </ElementContainer>
+        );
+      } else if (type === 'colContainer') {
+        return (
+          <ElementContainer key={`${k}-${new Date()}`} dataSource={container}>
+            <ColContainer key={`${k}-${new Date()}`} container={container}>
+              {renderContainer(children)}
+            </ColContainer>
+          </ElementContainer>
+        );
+      } else if (type === 'container') {
+        return (
+          <ElementContainer key={`${k}-${new Date()}`} dataSource={container}>
+            <Container key={k} content={container}></Container>
           </ElementContainer>
         );
       }
@@ -71,4 +82,4 @@ const Container = memo((props: any) => {
 
 export default connect(({ treeData }: any) => ({
   treeData,
-}))(Container);
+}))(Content);

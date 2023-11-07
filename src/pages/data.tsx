@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'umi';
+import { Link } from 'umi';
 import React from 'react';
 
 export default function Data() {

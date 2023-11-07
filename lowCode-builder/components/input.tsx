@@ -7,8 +7,8 @@ export default function Input(props: any) {
     field: {
       label,
       layoutDefinition: {
-        labelCol = 8,
-        wrapperCol = 16,
+        labelCol = 4,
+        wrapperCol = 20,
         layout = 'horizontal',
       },
     },
