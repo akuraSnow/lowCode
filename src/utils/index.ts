@@ -3,6 +3,20 @@ export function operateItem(list: any[], key: any, fn: any) {
   return newCount;
 }
 
+export function serialized(list: any, key: any) {
+  return list
+    .filter(
+      (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
+    )
+    .map((item: any, index: number) => {
+      item.key = key ? key + '-' + index : `${index}`;
+      if (Array.isArray(item.children)) {
+        item.children = serialized(item.children, item.key);
+      }
+      return item;
+    });
+}
+
 function nestedObject(arr: any, findKey: any, fn: any) {
   for (let i = 0; i < arr.length; i++) {
     const item = arr[i];

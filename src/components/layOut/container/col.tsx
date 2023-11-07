@@ -1,8 +1,9 @@
 import { connect } from 'umi';
 import componentList from '../../../../lowCode-builder/materialPool/componentList';
 import styles from './index.less';
-import { operateItem } from '@/utils';
+import { operateItem, serialized } from '@/utils';
 import ElementContainer from './element';
+import RowContainer from './row';
 import { memo } from 'react';
 
 const ColContainer = (props: any): any => {
@@ -65,8 +66,9 @@ const ColContainer = (props: any): any => {
     const keyList = container.key.split('-');
     const order = keyList[keyList.length - 2];
     const parentKey = keyList.splice(0, keyList.length - 2).join('-');
+    console.log('parentKey: ', parentKey);
 
-    let newCont = operateItem(count, parentKey, (element: any, i: any) => {
+    let newCont = operateItem(count, container.key, (element: any, i: any) => {
       element.children = element.children || [];
       element.children.splice(Number(order) + 1, 0, {
         name: '行容器',
@@ -91,20 +93,6 @@ const ColContainer = (props: any): any => {
     });
   }
 
-  function serialized(list: any, key: any) {
-    return list
-      .filter(
-        (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
-      )
-      .map((item: any, index: number) => {
-        item.key = key ? key + '-' + index : `${index}`;
-        if (Array.isArray(item.children)) {
-          item.children = serialized(item.children, item.key);
-        }
-        return item;
-      });
-  }
-
   const operatorBtn = (container: any) => {
     return (
       chooseKey === key && (
@@ -124,6 +112,13 @@ const ColContainer = (props: any): any => {
 
   const showContent = (List: any) => {
     return (List.children || []).map((item: any, index: number) => {
+      if (item.type === 'rowContainer') {
+        return (
+          <ElementContainer key={index} dataSource={item}>
+            <RowContainer container={item}></RowContainer>
+          </ElementContainer>
+        );
+      }
       const element = componentList.filter((k: any) => k.type === item.type);
       const [{ Component }] = element;
 

@@ -1,7 +1,6 @@
 [
   {
-    "id": "000000select",
-    "type": "select",
+    "type": "empty",
     "dataBinding": {
       "path": "a"
     },
@@ -9,6 +8,51 @@
       "row": 0,
       "column": 0,
       "columnSpan": 12
+    }
+  },
+  {
+    "type": "empty",
+    "dataBinding": {
+      "path": "a"
+    },
+    "layoutDefinition": {
+      "row": 1,
+      "column": 0,
+      "columnSpan": 12
+    }
+  },
+  {
+    "type": "empty",
+    "dataBinding": {
+      "path": "a"
+    },
+    "layoutDefinition": {
+      "row": 2,
+      "column": 0,
+      "columnSpan": 4
+    }
+  },
+  {
+    "id": "00210select",
+    "type": "select",
+    "dataBinding": {
+      "path": "a"
+    },
+    "layoutDefinition": {
+      "row": 2,
+      "column": 1,
+      "columnSpan": 4
+    }
+  },
+  {
+    "type": "empty",
+    "dataBinding": {
+      "path": "a"
+    },
+    "layoutDefinition": {
+      "row": 2,
+      "column": 2,
+      "columnSpan": 4
     }
   }
 ]

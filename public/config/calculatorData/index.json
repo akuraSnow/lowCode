@@ -69,7 +69,7 @@
       "id": "model111",
       "type": "modal",
       "dataBinding": {
-        "path": "model1"
+        "path": "modal1"
       },
       "metaData": {
         "title": "编辑",

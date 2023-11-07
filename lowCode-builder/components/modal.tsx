@@ -59,7 +59,7 @@ class ModelContent {
 
   constructor(props: any) {
     this.parent = props;
-    const { viewModel, jsonName, target: fatherComponent } = props;
+    const { viewModel = {}, jsonName, target: fatherComponent } = props;
     this.props = fatherComponent.target;
     this.viewModel = viewModel;
     this.loadJson({

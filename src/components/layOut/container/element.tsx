@@ -1,5 +1,5 @@
 import { connect } from 'umi';
-import { operateItem } from '@/utils';
+import { operateItem, serialized } from '@/utils';
 import styles from './index.less';
 import { chooseComponentSubject } from '@/services';
 
@@ -39,20 +39,6 @@ const OperateElement = (props: any): any => {
       type: 'treeData/chooseKey',
       payload: { chooseKey: key },
     });
-  }
-
-  function serialized(list: any, key: any) {
-    return list
-      .filter(
-        (item: any) => item.type !== 'rowContainer' || item.children.length > 0,
-      )
-      .map((item: any, index: number) => {
-        item.key = key ? key + '-' + index : `${index}`;
-        if (Array.isArray(item.children)) {
-          item.children = serialized(item.children, item.key);
-        }
-        return item;
-      });
   }
 
   return (

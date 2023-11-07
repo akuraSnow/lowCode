@@ -7,11 +7,7 @@ import React from 'react';
 import { bindExecuteJs, updateFelidJson } from '@/utils';
 import styles from './index.less';
 
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from '@ant-design/icons';
+import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { saveJson } from '@/services/api';

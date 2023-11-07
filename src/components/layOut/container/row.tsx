@@ -24,6 +24,12 @@ const RowContainer = (props: any) => {
     >
       <div className={styles.colContent}>
         {(children || []).map((content: any, i: any) => {
+          if (
+            content?.children &&
+            content?.children[0]?.children[0] === 'colContainer'
+          ) {
+            return <ColContainer key={k} content={content}></ColContainer>;
+          }
           return (
             <ElementContainer key={`${i}-${new Date()}`} dataSource={content}>
               <ColContainer content={content}></ColContainer>
