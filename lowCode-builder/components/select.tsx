@@ -8,7 +8,7 @@ const { Option } = FromSelect;
 export default function Select(props: any) {
   const {
     control,
-    field: { label, dataSourceList = [] },
+    field: { label, dataSource = [] },
   } = props;
 
   return (
@@ -18,7 +18,7 @@ export default function Select(props: any) {
         defaultValue={control.value}
         {...control.event}
       >
-        {dataSourceList.map(({ value, label }: any, index: number) => (
+        {dataSource.map(({ value, label }: any, index: number) => (
           <FromSelect.Option key={index} value={value}>
             {label}
           </FromSelect.Option>

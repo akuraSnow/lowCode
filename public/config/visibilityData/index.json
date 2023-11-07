@@ -24,7 +24,7 @@
     {
       "id": "table",
       "type": "table",
-      "dataSource": "getCalculatorData",
+      "dataSourceAction": "getCalculatorData",
       "metaData": {
         "columns": [
           {
@@ -47,6 +47,12 @@
                 "onclick": {
                   "name": "openModels"
                 }
+              },
+              {
+                "element": "<div>删除</div>",
+                "onclick": {
+                  "name": "deleteCalculator"
+                }
               }
             ]
           }
@@ -62,13 +68,17 @@
     {
       "id": "model111",
       "type": "modal",
-      "dataSource": "getCalculatorData",
+      "dataBinding": {
+        "path": "model1"
+      },
       "metaData": {
         "title": "编辑",
         "open": false,
-        "jsonName": "config/editCalculator.json",
+        "jsonName": "config/visibilityData/edit.json",
         "onOk": "handleCancel",
-        "onCancel": "handleCancel"
+        "onCancel": "handleCancel",
+        "destroyOnClose": true,
+        "width": 1000
       },
       "layoutDefinition": {
         "row": 10,

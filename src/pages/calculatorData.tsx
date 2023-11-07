@@ -1,65 +1,62 @@
 import { Link } from 'umi';
 import React from 'react';
 import { PageFormBuilder } from 'dynamic-builder';
+import {
+  deleteCalculator,
+  getCalculator,
+  updateCalculator,
+} from '@/services/api';
 
 @PageFormBuilder({
-  jsonName: 'config/calculatorData.json',
+  jsonName: 'config/calculatorData/index.json',
   provider: [],
 })
 export default class CalculatorData {
   [x: string]: any;
 
-  private label = '新增';
-
-  constructor(props: any) {
-    this.viewModel = {
-      model1: {},
-    };
-  }
+  constructor() {}
 
   showModel(params: any) {
-    console.log(
-      'params: ',
-      this.target.updateField([
-        { id: 'model111', metaData: { title: '新增', open: true } },
-      ]),
-    );
-    // this.viewModel.model1 = true;
-  }
-
-  getCalculatorData(res: any) {
-    console.log('res: ', res);
-
-    return Promise.resolve([
-      {
-        key: '1',
-        name: 'required',
-        firstName: 'fdf',
-        content: 32,
-        operate: <div>fff</div>,
-      },
+    this.viewModel.model1 = {
+      name: '',
+      content: '',
+    };
+    this.updateField([
+      { id: 'model111', metaData: { title: '新增', open: true } },
     ]);
   }
 
-  getCalData(res: any) {
-    console.log('res: ', res);
+  async getCalculatorData() {
+    return new Promise(async (res) => {
+      const { data } = await getCalculator();
 
-    return Promise.resolve([
+      res(
+        data.map((item: any, index: any) => {
+          item.key = index;
+          return item;
+        }),
+      );
+    });
+  }
+
+  async deleteCalculator(res: any) {
+    await deleteCalculator(res);
+    const dataSource = await this.getCalculatorData();
+    this.updateField([
       {
-        key: '1',
-        name: 'required',
-        firstName: 'fdf',
-        content: 32,
-        operate: <div>fff</div>,
+        id: 'table',
+        dataSource,
       },
     ]);
   }
 
   openModels(res: any) {
-    console.log('res: ', res);
-    console.log('openModels', this.viewModel);
+    this.viewModel.model1 = {
+      name: res.name,
+      content: res.content,
+    };
 
-    this.target.updateField([
+    this.updateField([
       {
         id: 'model111',
         metaData: {
@@ -70,22 +67,20 @@ export default class CalculatorData {
     ]);
   }
 
-  calculatorDataBtn() {
-    return <div>fdfsadsd</div>;
-  }
-
-  handleCancel(params: any, self: any) {
-    this.target.updateField([
+  async handleCancel(params: any, self: any) {
+    await updateCalculator(params);
+    const dataSource = await this.getCalculatorData();
+    this.updateField([
       {
         id: 'model111',
         metaData: {
           open: false,
         },
       },
+      {
+        id: 'table',
+        dataSource,
+      },
     ]);
-  }
-
-  getInputAction() {
-    return 'fdfd';
   }
 }

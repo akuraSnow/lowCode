@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { saveJson } from '@/services/api';
 
 function OperateList(props: any) {
   const {
@@ -30,19 +31,7 @@ function OperateList(props: any) {
     fields = bindExecuteJs(fields, functionObj);
     console.log('fields: ', fields);
 
-    fetch('http://localhost:3000/saveJson', {
-      method: 'POST',
-      body: JSON.stringify(fields),
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      },
-      credentials: 'same-origin',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('data: ', data);
-      });
+    const data = await saveJson();
 
     sessionStorage.setItem('name', JSON.stringify(fields));
     setOpen(true);

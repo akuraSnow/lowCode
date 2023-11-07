@@ -8,7 +8,6 @@ export default function RenderProvider(source: any, Component: any) {
   useEffect(() => {
     const observable = source.subscribe({
       next: (v: any) => {
-        console.log('v: ', v);
         setChildren(v.data);
       },
     });

@@ -20,7 +20,7 @@
       "type": "codeeditor",
       "label": "代码段",
       "dataBinding": {
-        "path": "code"
+        "path": "content"
       },
       "validator": [],
       "layoutDefinition": {
@@ -31,10 +31,5 @@
         "columnSpan": 12
       }
     }
-  ],
-  "actions": {
-    "load": {
-      "name": "getCalData"
-    }
-  }
+  ]
 }

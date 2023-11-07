@@ -42,14 +42,14 @@ class Control {
     const value = val.target ? val.target.value : val;
     const { action, dataBinding } = this.field;
 
+    if (dataBinding && dataBinding.path) {
+      const { path, converter } = dataBinding;
+
+      const newValue = this.converterExtension(converter, value, 'set');
+      set(this._viewModel, path, newValue);
+    }
+
     if (action && action[eventType]) {
-      if (dataBinding && dataBinding.path) {
-        const { path, converter } = dataBinding;
-
-        const newValue = this.converterExtension(converter, value, 'set');
-        set(this._viewModel, path, newValue);
-      }
-
       for (const key in action) {
         if (Object.prototype.hasOwnProperty.call(action, key)) {
           const { name, params } = action[key];
