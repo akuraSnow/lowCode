@@ -18,7 +18,6 @@ const Content = memo((props: any) => {
   function addComponent(container: any) {
     let newCont = operateItem(count, '0-0-0', (element: any, i: any) => {
       element.children.push({
-        name: '容器',
         key: element.key + '-' + element.children.length,
         type: 'container',
         children: [],

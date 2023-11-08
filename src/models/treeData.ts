@@ -37,18 +37,15 @@ const UserInfoModel: UserInfoModelType = {
                 key: '0-0-0',
                 children: [
                   {
-                    name: '行容器',
                     key: '0-0-0-0',
                     type: 'rowContainer',
                     children: [
                       {
-                        name: '容器',
                         key: '0-0-0-0-0',
                         type: 'container',
                         children: [],
                       },
                       {
-                        name: '容器',
                         key: '0-0-0-0-1',
                         type: 'container',
                         children: [],

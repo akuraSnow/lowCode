@@ -22,7 +22,8 @@ export default function RenderProvider(source: any, Component: any) {
 
       return (
         <div
-          className={`grid-item-${columnSpan} align-items-center`}
+          className={`align-items-center`}
+          style={{ gridColumnStart: `span ${columnSpan}` }}
           key={`${index}-${i}`.toString()}
         >
           <UnitComponent Component={Component} ElementList={ElementList} />

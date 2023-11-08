@@ -23,11 +23,14 @@ function OperateList(props: any) {
   };
 
   const showModal = async () => {
+    console.log('count: ', count);
     let fields = updateFelidJson(count);
-    fields = bindExecuteJs(fields, functionObj);
-    console.log('fields: ', fields);
 
-    const data = await saveJson();
+    console.log('fields: ', fields);
+    // fields = bindExecuteJs(fields, functionObj);
+    // console.log('fields: ', fields);
+
+    // const data = await saveJson();
 
     sessionStorage.setItem('name', JSON.stringify(fields));
     setOpen(true);

@@ -1,3 +1,5 @@
+import { sortBy } from 'lodash';
+
 export function operateItem(list: any[], key: any, fn: any) {
   const newCount = nestedObject(JSON.parse(JSON.stringify(list)), key, fn);
   return newCount;
@@ -88,7 +90,9 @@ function nestedObject(arr: any, findKey: any, fn: any) {
 }
 
 export function updateFelidJson(fieldsJson: any) {
-  const json = getJson(JSON.parse(JSON.stringify(fieldsJson)));
+  let json = getJson(JSON.parse(JSON.stringify(fieldsJson)));
+  const rowList = addColumns(json);
+  console.log('json: ', rowList);
   return getFields(json);
 }
 
@@ -104,11 +108,36 @@ export function bindExecuteJs(fieldsJson: any, funcObj: any) {
   });
 }
 
+function addColumns(json: any) {
+  let rowList: any[] = [];
+
+  for (let index = 0; index < json.length; index++) {
+    const { key } = json[index];
+    const keyArr = key.split('-').splice(3);
+    keyArr.reduce((pre: any, nex: any, index: number) => {
+      if (keyArr.length === index + 1) {
+        return (pre[nex] = {
+          key,
+        });
+      }
+      return (pre[nex] = pre[nex] || []);
+    }, rowList);
+
+    json.order = keyArr.join('');
+  }
+
+  rowList = rowList.map((item) => {
+    return sortBy(item, [(e: any) => e]);
+  });
+
+  return rowList;
+}
+
 function getFields(json: any) {
   let arr: any = [];
   json.forEach((item: any, index: any) => {
-    if (!['rowContainer', 'colContainer'].includes(item.type)) {
-      const { id, type, label, row, column, columnSpan } = item;
+    item.children.forEach((el: any) => {
+      const { id, type, label, row, column, columnSpan, order } = el;
       arr.push({
         id,
         type,
@@ -116,13 +145,9 @@ function getFields(json: any) {
         dataBinding: {
           path: 'a',
         },
-        layoutDefinition: { row, column, columnSpan },
+        layoutDefinition: { row, column, columnSpan, order: order },
       });
-    }
-
-    if (item.children) {
-      arr.push(...getFields(item.children));
-    }
+    });
   });
   return arr;
 }
@@ -131,17 +156,16 @@ function getJson(json: any) {
   let arr: any = [];
 
   json.forEach((item: any, index: number) => {
-    if (item.type === 'rowContainer') {
-      item.children = item.children.map((el: any, i: number) => {
-        el.children = el.children.length ? el.children : [{ type: 'empty' }];
-        el.children = el.children.map((res: any, order: number) => {
-          res.row = index;
-          res.column = i;
-          res.columnSpan = 12 / item.children.length;
-          return res;
-        });
+    if (item.type === 'container') {
+      item.children = item.children.length
+        ? item.children
+        : [{ type: 'empty', id: item.key.split('-').join('') + '0empty' }];
 
-        return el;
+      item.children = item.children.map((res: any, i: number) => {
+        res.row = index;
+        res.column = i;
+        res.columnSpan = 12 / item.children.length;
+        return res;
       });
       arr.push(item);
     }
