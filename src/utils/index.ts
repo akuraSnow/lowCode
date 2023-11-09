@@ -22,20 +22,6 @@ export function serialized(list: any, key: any) {
     });
 }
 
-export function getInitJson(
-  { type: ownerType, key, children }: any,
-  type: string,
-) {
-  return {
-    key,
-    type,
-    children: [
-      { key: key + '-0', type: ownerType, children: children },
-      { key: key + '-1', type: 'container', children: [] },
-    ],
-  };
-}
-
 export function cuttingModule(key: string, count: any[], type: string) {
   const includesType =
     type === 'rowContainer'
@@ -89,10 +75,24 @@ function nestedObject(arr: any, findKey: any, fn: any) {
   return arr;
 }
 
+export function getInitJson(
+  { type: ownerType, key, children }: any,
+  type: string,
+) {
+  return {
+    key,
+    type,
+    children: [
+      { key: key + '-0', type: ownerType, children: children },
+      { key: key + '-1', type: 'container', children: [] },
+    ],
+  };
+}
+
 export function updateFelidJson(fieldsJson: any) {
   let json = getJson(JSON.parse(JSON.stringify(fieldsJson)));
-  const rowList = addColumns(json);
-  console.log('json: ', rowList);
+  // const rowList = addColumns(json);
+  // console.log('json: ', rowList);
   return getFields(json);
 }
 
@@ -106,31 +106,6 @@ export function bindExecuteJs(fieldsJson: any, funcObj: any) {
     }
     return item;
   });
-}
-
-function addColumns(json: any) {
-  let rowList: any[] = [];
-
-  for (let index = 0; index < json.length; index++) {
-    const { key } = json[index];
-    const keyArr = key.split('-').splice(3);
-    keyArr.reduce((pre: any, nex: any, index: number) => {
-      if (keyArr.length === index + 1) {
-        return (pre[nex] = {
-          key,
-        });
-      }
-      return (pre[nex] = pre[nex] || []);
-    }, rowList);
-
-    json.order = keyArr.join('');
-  }
-
-  rowList = rowList.map((item) => {
-    return sortBy(item, [(e: any) => e]);
-  });
-
-  return rowList;
 }
 
 function getFields(json: any) {
@@ -165,6 +140,7 @@ function getJson(json: any) {
         res.row = index;
         res.column = i;
         res.columnSpan = 12 / item.children.length;
+        res.order = item.key.split('-').join('');
         return res;
       });
       arr.push(item);
@@ -176,4 +152,10 @@ function getJson(json: any) {
   });
 
   return arr;
+}
+
+export function listToTree(list: any[], pid: string = '') {
+  return list
+    .filter((it) => it.pid === pid)
+    .forEach((it) => (it.children = listToTree(list, it.id)));
 }

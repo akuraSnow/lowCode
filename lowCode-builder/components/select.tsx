@@ -12,7 +12,10 @@ export default function Select(props: any) {
   } = props;
 
   return (
-    <Form.Item label={label} style={{ width: '100% ' }}>
+    <Form.Item
+      label={label}
+      style={{ width: '100% ', height: '60px', lineHeight: '60px' }}
+    >
       <FromSelect
         getPopupContainer={(triggerNode) => triggerNode.parentNode}
         defaultValue={control.value}

@@ -22,7 +22,13 @@ export default function Input(props: any) {
       layout={layout}
       labelCol={{ span: labelCol }}
       wrapperCol={{ span: wrapperCol }}
-      style={{ width: '100% ' }}
+      style={{
+        width: '100% ',
+        height: '60px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
       <Form.Item
         label={label}
