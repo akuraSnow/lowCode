@@ -19,33 +19,72 @@ class Attribute {
 
   constructor(props: any) {
     chooseComponentSubject.subscribe((res: any) => {
+      console.log('res: ', res);
       const { label, type, executeJs } = res;
 
       this.componentData = res;
-      if (!iocContainer.skeleton.has(type)) {
-        this.setJson({
-          fields: [],
-        });
+
+      if (type !== 'container') {
+        if (!iocContainer.skeleton.has(type)) {
+          this.setJson({
+            fields: [],
+          });
+        } else {
+          const json = iocContainer.skeleton.get(type);
+          const jsonData = attributeJson.filter((item: any) =>
+            json.hasOwnProperty(item.id),
+          );
+
+          this.viewModel = {
+            ...json,
+            ...executeJs,
+            label,
+          };
+
+          this.setJson({
+            fields: jsonData,
+          });
+        }
       } else {
-        const json = iocContainer.skeleton.get(type);
-        const jsonData = attributeJson.filter((item: any) =>
-          json.hasOwnProperty(item.id),
-        );
-
-        this.viewModel = {
-          ...json,
-          ...executeJs,
-          label,
-        };
-
         this.setJson({
-          fields: jsonData,
+          fields: [
+            {
+              id: '2',
+              type: 'input',
+              label: 'width',
+              dataBinding: {
+                path: 'width',
+              },
+              layoutDefinition: {
+                row: 0,
+                column: 0,
+                labelCol: 4,
+                wrapperCol: 16,
+                columnSpan: 12,
+                order: '00',
+              },
+              action: {
+                onblur: {
+                  name: 'changeWidth',
+                },
+              },
+            },
+          ],
         });
       }
     });
 
     this.changeLabel = debounce(this.changeLabel, 1000);
     this.getData = debounce(this.getData, 1000);
+  }
+
+  changeWidth() {
+    console.warn('value: ', this.viewModel);
+
+    updateDataSubject.next({
+      name: 'width',
+      value: JSON.parse(JSON.stringify(this.viewModel))['width'],
+    });
   }
 
   changeLabel(params: any) {
@@ -60,7 +99,7 @@ class Attribute {
 
   getData(params: any) {
     const { type } = params;
-    const { id } = this.target.componentData;
+    const { id } = this.componentData;
 
     console.log(this.viewModel);
 

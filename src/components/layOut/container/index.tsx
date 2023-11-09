@@ -34,7 +34,7 @@ const Content = memo((props: any) => {
 
   const renderContainer = (count: any) => {
     return count.map((container: any, k: any) => {
-      const { children, type } = container;
+      const { children, type, width } = container;
       if (type === 'rowContainer') {
         return (
           <ElementContainer key={`${k}-${new Date()}`} dataSource={container}>
@@ -53,7 +53,11 @@ const Content = memo((props: any) => {
         );
       } else if (type === 'container') {
         return (
-          <ElementContainer key={`${k}-${new Date()}`} dataSource={container}>
+          <ElementContainer
+            width={width}
+            key={`${k}-${new Date()}`}
+            dataSource={container}
+          >
             <Container key={k} content={container}></Container>
           </ElementContainer>
         );

@@ -12,33 +12,43 @@ export default function RenderProvider(source: any, Component: any) {
         // const data = addColumns(v.data);
         // console.log('data: ', data);
         setChildren(v.data);
+        console.log('v.data: ', v.data);
       },
     });
     return () => observable.unsubscribe();
   }, []);
 
-  const columns = (item: any, index: number): React.ReactNode => {
-    return item.map((ElementList: any, i: number) => {
-      const {
-        layoutDefinition: { columnSpan = 1 },
-      } = ElementList.field;
+  const columns = (
+    item: any,
+    index: number,
+    isRow: boolean,
+  ): React.ReactNode => {
+    if (Array.isArray(item)) {
+      return item.map((el, i: number) => {
+        const flexDirection = isRow ? 'row' : 'column';
+        return (
+          <div
+            className="packaging-box"
+            style={{ flexDirection: flexDirection }}
+            key={i}
+          >
+            {columns(el, index, !isRow)}
+          </div>
+        );
+      });
+    }
 
-      return (
-        <div
-          className={`align-items-center`}
-          style={{ gridColumnStart: `span ${columnSpan}` }}
-          key={`${index}-${i}`.toString()}
-        >
-          <UnitComponent Component={Component} ElementList={ElementList} />
-        </div>
-      );
-    });
+    return (
+      <div className="component-box" key={`${index}`.toString()}>
+        <UnitComponent Component={Component} ElementList={item} />
+      </div>
+    );
   };
 
   return (children || []).map((item: any, index: number) => {
     return (
-      <div className="grid-container" key={index}>
-        {columns(item, index)}
+      <div className="flex-container" key={index}>
+        {columns(item, index, true)}
       </div>
     );
   });

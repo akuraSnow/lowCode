@@ -9,6 +9,8 @@ const ElementContainer = (props: any): any => {
     children,
     dispatch,
     dataSource,
+    notShowCutModel,
+    width,
     treeData: { count, chooseKey, functionObj },
   } = props;
 
@@ -71,7 +73,8 @@ const ElementContainer = (props: any): any => {
 
   const operatorBtn = (container: any) => {
     return (
-      chooseKey === dataKey && (
+      chooseKey === dataKey &&
+      !notShowCutModel && (
         <>
           <span
             className={styles.verticalCut}
@@ -94,9 +97,12 @@ const ElementContainer = (props: any): any => {
     );
   };
 
+  const style = width ? { width: `${width}px` } : { flex: 1 };
+
   return (
     children && (
       <div
+        // style={style}
         className={`${styles.itemContainer} ${
           chooseKey === dataKey && styles.chooseBtn
         }`}

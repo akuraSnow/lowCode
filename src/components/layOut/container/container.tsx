@@ -59,7 +59,11 @@ const Container = (props: any): any => {
       };
 
       return (
-        <ElementContainer key={`${item.key}-${new Date()}`} dataSource={item}>
+        <ElementContainer
+          key={`${item.key}-${new Date()}`}
+          dataSource={item}
+          notShowCutModel={true}
+        >
           <div className={styles.componentItem}>
             <Component {...initProps} />
           </div>
