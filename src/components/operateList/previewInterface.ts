@@ -11,6 +11,7 @@ class Home {
   constructor(props: any) {
     this.viewModel = { premium: 111 };
     let fields: any = sessionStorage.getItem('name');
+    console.log('fields: ', fields);
 
     this.setJson({
       fields: JSON.parse(fields),

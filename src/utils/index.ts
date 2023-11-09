@@ -91,8 +91,8 @@ function nestedObject(arr: any, findKey: any, fn: any) {
 
 export function updateFelidJson(fieldsJson: any) {
   let json = getJson(JSON.parse(JSON.stringify(fieldsJson)));
-  const rowList = addColumns(json);
-  console.log('json: ', rowList);
+  // const rowList = addColumns(json);
+  // console.log('json: ', rowList);
   return getFields(json);
 }
 
@@ -108,16 +108,17 @@ export function bindExecuteJs(fieldsJson: any, funcObj: any) {
   });
 }
 
-function addColumns(json: any) {
+export function addColumns(json: any) {
   let rowList: any[] = [];
 
   for (let index = 0; index < json.length; index++) {
     const { key } = json[index];
     const keyArr = key.split('-').splice(3);
+    const idList = json[index].children.map((e: any) => e.id);
     keyArr.reduce((pre: any, nex: any, index: number) => {
       if (keyArr.length === index + 1) {
         return (pre[nex] = {
-          key,
+          ids: idList,
         });
       }
       return (pre[nex] = pre[nex] || []);
@@ -145,7 +146,7 @@ function getFields(json: any) {
         dataBinding: {
           path: 'a',
         },
-        layoutDefinition: { row, column, columnSpan, order: order },
+        layoutDefinition: { row, column, columnSpan, order },
       });
     });
   });
@@ -165,6 +166,7 @@ function getJson(json: any) {
         res.row = index;
         res.column = i;
         res.columnSpan = 12 / item.children.length;
+        res.order = item.key.split('-').join('');
         return res;
       });
       arr.push(item);

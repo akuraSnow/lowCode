@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import UnitComponent from './component';
+import { addColumns } from '../../src/utils/index';
 import './index.css';
 
 export default function RenderProvider(source: any, Component: any) {
@@ -8,6 +9,8 @@ export default function RenderProvider(source: any, Component: any) {
   useEffect(() => {
     const observable = source.subscribe({
       next: (v: any) => {
+        // const data = addColumns(v.data);
+        // console.log('data: ', data);
         setChildren(v.data);
       },
     });

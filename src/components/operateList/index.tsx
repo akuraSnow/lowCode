@@ -26,12 +26,6 @@ function OperateList(props: any) {
     console.log('count: ', count);
     let fields = updateFelidJson(count);
 
-    console.log('fields: ', fields);
-    // fields = bindExecuteJs(fields, functionObj);
-    // console.log('fields: ', fields);
-
-    // const data = await saveJson();
-
     sessionStorage.setItem('name', JSON.stringify(fields));
     setOpen(true);
   };

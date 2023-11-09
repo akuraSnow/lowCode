@@ -74,7 +74,7 @@
       "metaData": {
         "title": "编辑",
         "open": false,
-        "jsonName": "config/editCalculator/edit.json",
+        "jsonName": "config/calculatorData/edit.json",
         "onOk": "handleCancel",
         "onCancel": "handleCancel",
         "destroyOnClose": true,

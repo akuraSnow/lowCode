@@ -29,6 +29,7 @@ export default class CalculatorData {
   async getCalculatorData() {
     return new Promise(async (res) => {
       const { data } = await getCalculator();
+      console.log('data: ', data);
 
       res(
         data.map((item: any, index: any) => {

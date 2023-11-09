@@ -2,7 +2,6 @@ import { connect } from 'umi';
 import { Menu, Drawer, Layout, Select } from 'antd';
 import { useState } from 'react';
 
-import initBuilder from '../../lowCode-builder/index';
 import Materials from '@/components/menuOpretor/menuOperator';
 import DataSource from '@/components/menuOpretor/dataSource';
 
