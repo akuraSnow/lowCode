@@ -1,42 +1,65 @@
 {
   "fields": [
     {
-      "id": "addValue",
+      "id": "input",
+      "type": "input",
+      "label": "验证名",
+      "dataBinding": {
+        "path": "name"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "labelCol": 4,
+        "wrapperCol": 16,
+        "columnSpan": 12,
+        "order": "0"
+      }
+    },
+    {
+      "id": "addCol",
       "type": "button",
-      "label": "添加",
+      "label": "添加一列",
       "metaData": {
         "type": "primary"
       },
       "layoutDefinition": {
         "row": 0,
         "column": 1,
-        "columnSpan": 2
+        "columnSpan": 2,
+        "order": "10"
       },
       "action": {
         "onclick": {
-          "name": "showModel",
-          "params": {
-            "type": "label"
-          }
+          "name": "a"
         }
       }
     },
     {
-      "id": "table",
+      "id": "addRow",
+      "type": "button",
+      "label": "添加一行",
+      "metaData": {
+        "type": "primary"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 1,
+        "columnSpan": 2,
+        "order": "11"
+      },
+      "action": {
+        "onclick": {
+          "name": "a"
+        }
+      }
+    },
+    {
+      "id": "table222",
       "type": "table",
       "dataSourceAction": "getVisibilityData",
       "metaData": {
         "columns": [
-          {
-            "title": "Name",
-            "dataIndex": "name",
-            "key": "name"
-          },
-          {
-            "title": "内容",
-            "dataIndex": "content",
-            "key": "content"
-          },
           {
             "title": "操作",
             "dataIndex": "operate",
@@ -61,29 +84,8 @@
       "layoutDefinition": {
         "row": 1,
         "column": 1,
-        "columnSpan": 12
-      }
-    },
-
-    {
-      "id": "model111",
-      "type": "modal",
-      "dataBinding": {
-        "path": "model1"
-      },
-      "metaData": {
-        "title": "编辑",
-        "open": false,
-        "jsonName": "config/visibilityData/edit.json",
-        "onOk": "handleOk",
-        "onCancel": "handleCancel",
-        "destroyOnClose": true,
-        "width": 1000
-      },
-      "layoutDefinition": {
-        "row": 10,
-        "column": 1,
-        "columnSpan": 12
+        "columnSpan": 12,
+        "order": "2"
       }
     }
   ]

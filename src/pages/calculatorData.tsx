@@ -1,10 +1,8 @@
-import { Link } from 'umi';
-import React from 'react';
 import { PageFormBuilder } from 'dynamic-builder';
 import {
-  deleteCalculator,
-  getCalculator,
-  updateCalculator,
+  deleteJsonByPath,
+  getJsonByPath,
+  updateJsonByPath,
 } from '@/services/api';
 
 @PageFormBuilder({
@@ -28,7 +26,7 @@ export default class CalculatorData {
 
   async getCalculatorData() {
     return new Promise(async (res) => {
-      const { data } = await getCalculator();
+      const { data } = await getJsonByPath({ path: 'calculator' });
       console.log('data: ', data);
 
       res(
@@ -41,7 +39,7 @@ export default class CalculatorData {
   }
 
   async deleteCalculator(res: any) {
-    await deleteCalculator(res);
+    await deleteJsonByPath({ ...res, path: 'calculator' });
     const dataSource = await this.getCalculatorData();
     this.updateField([
       {
@@ -68,8 +66,8 @@ export default class CalculatorData {
     ]);
   }
 
-  async handleCancel(params: any, self: any) {
-    await updateCalculator(params);
+  async handleOk(params: any, self: any) {
+    await updateJsonByPath({ ...params, path: 'calculator' });
     const dataSource = await this.getCalculatorData();
     this.updateField([
       {
@@ -81,6 +79,17 @@ export default class CalculatorData {
       {
         id: 'table',
         dataSource,
+      },
+    ]);
+  }
+
+  handleCancel(params: any, self: any) {
+    this.updateField([
+      {
+        id: 'model111',
+        metaData: {
+          open: false,
+        },
       },
     ]);
   }

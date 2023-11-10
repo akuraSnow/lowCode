@@ -21,7 +21,8 @@
 const baseUrl = 'http://localhost:8080/';
 
 const queryString = (params: any) => {
-  if (Object.keys(params).length > 0) {
+  console.log('params: ', params);
+  if (Object.keys(JSON.parse(params)).length > 0) {
     return (
       '?' +
       Object.keys(params)
@@ -29,7 +30,7 @@ const queryString = (params: any) => {
         .join('&')
     );
   }
-  return ' ';
+  return '';
 };
 
 const fetchAction = async ({ url, method, data, headers }: any) => {
@@ -83,49 +84,25 @@ export const saveJson = async () => {
   });
 };
 
-export const getCalculator = async () => {
+export const getJsonByPath = async ({ path }: any) => {
   return fetchAction({
-    url: 'getJson',
-    method: 'GET',
-    data: { path: calculator },
-  });
-};
-
-export const updateCalculator = async (params: any) => {
-  return await fetchAction({
-    url: 'updateJson',
-    method: 'POST',
-    data: { path: calculator, ...params },
-  });
-};
-
-export const deleteCalculator = async (params: any) => {
-  return await fetchAction({
-    url: 'deleteJson',
-    method: 'POST',
-    data: { path: calculator, ...params },
-  });
-};
-
-export const getVisibility = async () => {
-  return fetchAction({
-    url: `getJson?path=${visibility}`,
+    url: `getJson?path=${path}`,
     method: 'GET',
   });
 };
 
-export const updateVisibility = async (params: any) => {
+export const updateJsonByPath = async (params: any) => {
   return await fetchAction({
     url: 'updateJson',
     method: 'POST',
-    data: { path: visibility, ...params },
+    data: params,
   });
 };
 
-export const deleteVisibility = async (params: any) => {
+export const deleteJsonByPath = async (params: any) => {
   return await fetchAction({
     url: 'deleteJson',
     method: 'POST',
-    data: { path: visibility, ...params },
+    data: params,
   });
 };

@@ -16,7 +16,7 @@ app.use(cors()).use((req, res, next) => {
   next();
 });
 
-const calculatorFolderName = './serve/calculator';
+const calculatorFolderName = './serve/';
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -37,35 +37,33 @@ app.get('/addJson', async function (req, res) {
 });
 
 app.get('/getJson', async function (req, res) {
-  console.log('req: ', url.parse(req.url, true).query);
-  console.log('req: ', req.param());
+  const { path } = req.query;
 
-  const { name, content, path } = req.body;
-  console.log('path: ', path);
-
-  // const data = await GetFilesInFolder(calculatorFolderName);
-  res.send(url.parse(req.url, true).query);
+  const data = await GetFilesInFolder(`${calculatorFolderName}/${path}`);
+  res.send({
+    status: 200,
+    data: data,
+  });
 });
 
 app.post('/updateJson', async function (req, res) {
-  const { name, content } = req.body;
+  const { name, content, path } = req.body;
+  const filePath = `${calculatorFolderName}/${path}/${name}.js`;
 
-  const path = `${calculatorFolderName}/${name}.js`;
-
-  if (fs.existsSync(path)) {
-    await fs.unlinkSync(path, () => {});
+  if (fs.existsSync(filePath)) {
+    await fs.unlinkSync(filePath, () => {});
   }
 
-  await writeFile(path, content);
+  await writeFile(filePath, content);
   res.send({ status: 200, data: content });
 });
 
 app.post('/deleteJson', async function (req, res) {
-  const { name, content } = req.body;
+  const { name, content, path } = req.body;
 
-  const path = `${calculatorFolderName}/${name}.js`;
+  const filePath = `${calculatorFolderName}/${path}/${name}.js`;
 
-  await fs.unlinkSync(path, () => {});
+  await fs.unlinkSync(filePath, () => {});
   res.send({ status: 200, data: content });
 });
 

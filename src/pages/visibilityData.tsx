@@ -2,9 +2,9 @@ import { Link } from 'umi';
 import React from 'react';
 import { PageFormBuilder } from 'dynamic-builder';
 import {
-  deleteVisibility,
-  getVisibility,
-  updateVisibility,
+  deleteJsonByPath,
+  getJsonByPath,
+  updateJsonByPath,
 } from '@/services/api';
 
 @PageFormBuilder({
@@ -28,7 +28,7 @@ export default class VisibilityData {
 
   async getVisibilityData() {
     return new Promise(async (res) => {
-      const { data } = await getVisibility();
+      const { data } = await getJsonByPath({ path: 'visibility' });
 
       res(
         data.map((item: any, index: any) => {
@@ -40,7 +40,7 @@ export default class VisibilityData {
   }
 
   async deleteVisibility(res: any) {
-    await deleteVisibility(res);
+    await deleteJsonByPath({ ...res, path: 'visibility' });
     const dataSource = await this.getVisibilityData();
     this.updateField([
       {
@@ -67,8 +67,8 @@ export default class VisibilityData {
     ]);
   }
 
-  async handleCancel(params: any, self: any) {
-    await updateVisibility(params);
+  async handleOk(params: any, self: any) {
+    await updateJsonByPath({ ...params, path: 'visibility' });
     const dataSource = await this.getVisibilityData();
     this.updateField([
       {
@@ -80,6 +80,17 @@ export default class VisibilityData {
       {
         id: 'table',
         dataSource,
+      },
+    ]);
+  }
+
+  handleCancel(params: any, self: any) {
+    this.updateField([
+      {
+        id: 'model111',
+        metaData: {
+          open: false,
+        },
       },
     ]);
   }

@@ -8,8 +8,6 @@ export default function RenderProvider(source: any, Component: any) {
   useEffect(() => {
     const observable = source.subscribe({
       next: (v: any) => {
-        // const data = addColumns(v.data);
-        // console.log('data: ', data);
         setChildren(v.data);
         console.log('v.data: ', v.data);
       },
@@ -38,9 +36,11 @@ export default function RenderProvider(source: any, Component: any) {
     }
 
     return (
-      <div className="component-box" key={`${index}`.toString()}>
-        <UnitComponent Component={Component} ElementList={item} />
-      </div>
+      item && (
+        <div className="component-box" key={`${index}`.toString()}>
+          <UnitComponent Component={Component} ElementList={item} />
+        </div>
+      )
     );
   };
 
