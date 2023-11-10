@@ -109,9 +109,8 @@ export const deleteCalculator = async (params: any) => {
 
 export const getVisibility = async () => {
   return fetchAction({
-    url: 'getJson',
+    url: `getJson?path=${visibility}`,
     method: 'GET',
-    data: { path: visibility },
   });
 };
 

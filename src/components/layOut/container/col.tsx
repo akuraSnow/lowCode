@@ -1,10 +1,5 @@
 import { connect } from 'umi';
-import componentList from '../../../../lowCode-builder/materialPool/componentList';
 import styles from './index.less';
-import { operateItem, serialized } from '@/utils';
-import ElementContainer from './element';
-import RowContainer from './row';
-import { memo } from 'react';
 
 const ColContainer = (props: any): any => {
   const {

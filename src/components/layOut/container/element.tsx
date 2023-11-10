@@ -1,8 +1,7 @@
 import { connect } from 'umi';
-import { operateItem, serialized, getInitJson, cuttingModule } from '@/utils';
+import { operateItem, serialized, cuttingModule } from '@/utils';
 import { chooseComponentSubject } from '@/services';
 import styles from './index.less';
-import { cloneDeep } from 'lodash';
 
 const ElementContainer = (props: any): any => {
   const {

@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const cors = require('cors');
+var url = require('url');
 
 const { writeFile, GetFilesInFolder, isFile } = require('./util.js');
 const app = express();
@@ -36,13 +37,14 @@ app.get('/addJson', async function (req, res) {
 });
 
 app.get('/getJson', async function (req, res) {
-  console.log('req: ', req.query);
+  console.log('req: ', url.parse(req.url, true).query);
+  console.log('req: ', req.param());
 
   const { name, content, path } = req.body;
   console.log('path: ', path);
 
-  const data = await GetFilesInFolder(calculatorFolderName);
-  res.send({ status: 200, data });
+  // const data = await GetFilesInFolder(calculatorFolderName);
+  res.send(url.parse(req.url, true).query);
 });
 
 app.post('/updateJson', async function (req, res) {

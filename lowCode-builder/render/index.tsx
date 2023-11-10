@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import UnitComponent from './component';
-import { addColumns } from '../../src/utils/index';
 import './index.css';
 
 export default function RenderProvider(source: any, Component: any) {

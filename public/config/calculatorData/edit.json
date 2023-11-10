@@ -12,11 +12,12 @@
         "column": 0,
         "labelCol": 4,
         "wrapperCol": 16,
-        "columnSpan": 12
+        "columnSpan": 12,
+        "order": "0"
       }
     },
     {
-      "id": "input",
+      "id": "codeeditor",
       "type": "codeeditor",
       "label": "代码段",
       "dataBinding": {
@@ -28,7 +29,8 @@
         "column": 0,
         "labelCol": 4,
         "wrapperCol": 16,
-        "columnSpan": 12
+        "columnSpan": 12,
+        "order": "1"
       }
     }
   ]

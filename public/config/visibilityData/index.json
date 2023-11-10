@@ -24,7 +24,7 @@
     {
       "id": "table",
       "type": "table",
-      "dataSourceAction": "getCalculatorData",
+      "dataSourceAction": "getVisibilityData",
       "metaData": {
         "columns": [
           {

@@ -52,7 +52,7 @@ export default class CalculatorData {
   }
 
   openModels(res: any) {
-    this.viewModel.model1 = {
+    this.viewModel.modal1 = {
       name: res.name,
       content: res.content,
     };

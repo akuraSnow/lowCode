@@ -26,7 +26,7 @@ export function cuttingModule(key: string, count: any[], type: string) {
   const includesType =
     type === 'rowContainer'
       ? ['colContainer', undefined]
-      : ['colContainer', 'rowContainer'];
+      : ['rowContainer', undefined];
   const keyList = key.split('-');
   const order = keyList[keyList.length - 1];
   const parentKey = keyList.splice(0, keyList.length - 1).join('-');
@@ -90,7 +90,8 @@ export function getInitJson(
 }
 
 export function updateFelidJson(fieldsJson: any) {
-  let json = getJson(JSON.parse(JSON.stringify(fieldsJson)));
+  let json = getJson(JSON.parse(JSON.stringify(fieldsJson)), 'colContainer');
+  console.log('json: ', json);
   // const rowList = addColumns(json);
   // console.log('json: ', rowList);
   return getFields(json);
@@ -112,7 +113,8 @@ function getFields(json: any) {
   let arr: any = [];
   json.forEach((item: any, index: any) => {
     item.children.forEach((el: any) => {
-      const { id, type, label, row, column, columnSpan, order } = el;
+      const { id, type, label, row, column, columnSpan, order, parentRange } =
+        el;
       arr.push({
         id,
         type,
@@ -120,14 +122,14 @@ function getFields(json: any) {
         dataBinding: {
           path: 'a',
         },
-        layoutDefinition: { row, column, columnSpan, order },
+        layoutDefinition: { row, column, columnSpan, order, parentRange },
       });
     });
   });
   return arr;
 }
 
-function getJson(json: any) {
+function getJson(json: any, range: string) {
   let arr: any = [];
 
   json.forEach((item: any, index: number) => {
@@ -141,13 +143,14 @@ function getJson(json: any) {
         res.column = i;
         res.columnSpan = 12 / item.children.length;
         res.order = item.key.split('-').join('');
+        res.parentRange = range;
         return res;
       });
       arr.push(item);
     }
 
     if (item.children) {
-      arr.push(...getJson(item.children));
+      arr.push(...getJson(item.children, item.type));
     }
   });
 
