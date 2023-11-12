@@ -19,7 +19,6 @@ class Attribute {
 
   constructor(props: any) {
     chooseComponentSubject.subscribe((res: any) => {
-      console.log('res: ', res);
       const { label, type, executeJs } = res;
 
       this.componentData = res;

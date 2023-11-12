@@ -3,9 +3,23 @@
     {
       "id": "input",
       "type": "input",
-      "label": "验证名",
+      "label": "数据名",
       "dataBinding": {
         "path": "name"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 0,
+        "columnSpan": 12,
+        "order": "0"
+      }
+    },
+    {
+      "id": "addRowName",
+      "type": "input",
+      "label": "",
+      "dataBinding": {
+        "path": "rowName"
       },
       "layoutDefinition": {
         "row": 0,
@@ -13,13 +27,13 @@
         "labelCol": 4,
         "wrapperCol": 16,
         "columnSpan": 12,
-        "order": "0"
+        "order": "10"
       }
     },
     {
       "id": "addCol",
       "type": "button",
-      "label": "添加一列",
+      "label": "添加列",
       "metaData": {
         "type": "primary"
       },
@@ -27,12 +41,63 @@
         "row": 0,
         "column": 1,
         "columnSpan": 2,
-        "order": "10"
+        "order": "110"
       },
       "action": {
         "onclick": {
-          "name": "a"
+          "name": "addCol"
         }
+      }
+    },
+
+    {
+      "id": "removeCol",
+      "type": "button",
+      "label": "移除列",
+      "metaData": {
+        "type": "primary"
+      },
+      "layoutDefinition": {
+        "row": 0,
+        "column": 1,
+        "columnSpan": 2,
+        "order": "111"
+      },
+      "action": {
+        "onclick": {
+          "name": "removeCol"
+        }
+      }
+    },
+
+    {
+      "id": "table222",
+      "type": "table",
+      "dataSource": [],
+      "metaData": {
+        "columns": [
+          {
+            "title": "操作",
+            "dataIndex": "operate",
+            "key": "operate",
+            "render": [
+              {
+                "type": "save",
+                "element": "<div>保存</div>",
+                "onclick": {
+                  "name": "saveData"
+                }
+              }
+            ]
+          }
+        ],
+        "editable": true
+      },
+      "layoutDefinition": {
+        "row": 1,
+        "column": 1,
+        "columnSpan": 12,
+        "order": "2"
       }
     },
     {
@@ -46,46 +111,12 @@
         "row": 0,
         "column": 1,
         "columnSpan": 2,
-        "order": "11"
+        "order": "31"
       },
       "action": {
         "onclick": {
-          "name": "a"
+          "name": "addRow"
         }
-      }
-    },
-    {
-      "id": "table222",
-      "type": "table",
-      "dataSourceAction": "getVisibilityData",
-      "metaData": {
-        "columns": [
-          {
-            "title": "操作",
-            "dataIndex": "operate",
-            "key": "operate",
-            "render": [
-              {
-                "element": "<div>编辑</div>",
-                "onclick": {
-                  "name": "openModels"
-                }
-              },
-              {
-                "element": "<div>删除</div>",
-                "onclick": {
-                  "name": "deleteCalculator"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "layoutDefinition": {
-        "row": 1,
-        "column": 1,
-        "columnSpan": 12,
-        "order": "2"
       }
     }
   ]

@@ -29,13 +29,17 @@ export default class VisibilityData {
   async getVisibilityData() {
     return new Promise(async (res) => {
       const { data } = await getJsonByPath({ path: 'visibility' });
-
-      res(
-        data.map((item: any, index: any) => {
-          item.key = index;
-          return item;
-        }),
-      );
+      if (data && data.length) {
+        res(
+          data.map((item: any, index: any) => {
+            item.key = index;
+            item.edit = true;
+            return item;
+          }),
+        );
+      } else {
+        res([]);
+      }
     });
   }
 

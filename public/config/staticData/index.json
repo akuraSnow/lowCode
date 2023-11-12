@@ -24,7 +24,7 @@
     {
       "id": "table",
       "type": "table",
-      "dataSourceAction": "getVisibilityData",
+      "dataSourceAction": "getStaticData",
       "metaData": {
         "columns": [
           {
@@ -51,7 +51,7 @@
               {
                 "element": "<div>删除</div>",
                 "onclick": {
-                  "name": "deleteCalculator"
+                  "name": "deleteStaticData"
                 }
               }
             ]

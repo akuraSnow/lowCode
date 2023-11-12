@@ -32,7 +32,6 @@ const ElementContainer = (props: any): any => {
   }
 
   function chooseElContainer(key: any) {
-    console.log('key: ', key);
     chooseComponentSubject.next({
       ...dataSource,
       executeJs: functionObj[dataSource.id] || undefined,

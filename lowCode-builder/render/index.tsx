@@ -9,7 +9,6 @@ export default function RenderProvider(source: any, Component: any) {
     const observable = source.subscribe({
       next: (v: any) => {
         setChildren(v.data);
-        console.log('v.data: ', v.data);
       },
     });
     return () => observable.unsubscribe();

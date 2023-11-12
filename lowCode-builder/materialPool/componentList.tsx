@@ -33,7 +33,30 @@ export const attributeJson = [
       },
     },
   },
-
+  {
+    id: 'dataBinding',
+    type: 'input',
+    label: 'dataBinding',
+    dataBinding: {
+      path: 'path',
+    },
+    layoutDefinition: {
+      row: 2,
+      column: 1,
+      columnSpan: 12,
+      labelCol: 12,
+      wrapperCol: 24,
+      layout: 'vertical',
+    },
+    action: {
+      onchange: {
+        name: 'getData',
+        params: {
+          type: 'dataBinding',
+        },
+      },
+    },
+  },
   {
     id: 'dataSource',
     type: 'codeeditor',
@@ -59,30 +82,6 @@ export const attributeJson = [
     },
   },
 
-  {
-    id: 'dataBinding',
-    type: 'input',
-    label: 'dataBinding',
-    dataBinding: {
-      path: 'path',
-    },
-    layoutDefinition: {
-      row: 2,
-      column: 1,
-      columnSpan: 12,
-      labelCol: 12,
-      wrapperCol: 24,
-      layout: 'vertical',
-    },
-    action: {
-      onchange: {
-        name: 'getData',
-        params: {
-          type: 'dataBinding',
-        },
-      },
-    },
-  },
   {
     id: 'labelAction',
     type: 'codeeditor',

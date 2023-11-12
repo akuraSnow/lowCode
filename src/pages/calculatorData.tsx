@@ -29,12 +29,17 @@ export default class CalculatorData {
       const { data } = await getJsonByPath({ path: 'calculator' });
       console.log('data: ', data);
 
-      res(
-        data.map((item: any, index: any) => {
-          item.key = index;
-          return item;
-        }),
-      );
+      if (data && data.length) {
+        res(
+          data.map((item: any, index: any) => {
+            item.key = index;
+            item.edit = true;
+            return item;
+          }),
+        );
+      } else {
+        res([]);
+      }
     });
   }
 

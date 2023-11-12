@@ -40,7 +40,7 @@
           {
             "title": "操作",
             "dataIndex": "operate",
-            "key": "operate",
+            "key": "edit",
             "render": [
               {
                 "element": "<div>编辑</div>",

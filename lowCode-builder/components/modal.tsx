@@ -68,6 +68,6 @@ class ModelContent {
   }
 
   componentDidUpdate() {
-    this.parent.setCloseViewModel(() => this.viewModel);
+    this.parent.setCloseViewModel(() => this);
   }
 }
