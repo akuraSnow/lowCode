@@ -18,6 +18,11 @@ class Attribute {
   private componentData: any;
 
   constructor(props: any) {
+    console.log('props: ', props);
+    const { optionList } = props;
+
+    this.optionList = optionList;
+
     chooseComponentSubject.subscribe((res: any) => {
       const { label, type, executeJs } = res;
 
@@ -30,9 +35,17 @@ class Attribute {
           });
         } else {
           const json = iocContainer.skeleton.get(type);
-          const jsonData = attributeJson.filter((item: any) =>
-            json.hasOwnProperty(item.id),
+
+          const staticJson = attributeJson.filter((item: any) =>
+            json.staticProperties.hasOwnProperty(item.id),
           );
+          const bindingMethod = attributeJson.filter((item: any) =>
+            json.staticProperties.hasOwnProperty(item.id),
+          );
+
+          // const jsonData = attributeJson.filter((item: any) =>
+          //   json.hasOwnProperty(item.id),
+          // );
 
           this.viewModel = {
             ...json,
@@ -41,7 +54,7 @@ class Attribute {
           };
 
           this.setJson({
-            fields: jsonData,
+            fields: attributeJson,
           });
         }
       } else {
@@ -77,6 +90,39 @@ class Attribute {
     this.getData = debounce(this.getData, 1000);
   }
 
+  getDataSource(res: any) {
+    console.log('res: ', res);
+
+    const {
+      field: {
+        metaData: { path },
+      },
+    } = res;
+
+    const data = this.props.optionList[path].map((item: any) => {
+      const { name, content } = item;
+      return {
+        label: name,
+        value: content,
+      };
+    });
+    console.log('data: ', data);
+    return data;
+  }
+
+  switchProperties(params: any) {
+    const { type } = params;
+    console.log('type: ', type);
+    console.log('type: ', this.viewModel[`has${type}`]);
+
+    this.updateField([
+      {
+        id: type,
+        visibility: this.viewModel[`has${type}`] ? 'required' : 'hidden',
+      },
+    ]);
+  }
+
   changeWidth() {
     console.warn('value: ', this.viewModel);
 
@@ -88,7 +134,6 @@ class Attribute {
 
   changeLabel(params: any) {
     const { type } = params;
-    console.warn('value: ', type);
 
     updateDataSubject.next({
       name: type,
@@ -98,7 +143,7 @@ class Attribute {
 
   getData(params: any) {
     const { type } = params;
-    const { id } = this.componentData;
+    const { id } = this.props.componentData;
 
     console.log(this.viewModel);
 

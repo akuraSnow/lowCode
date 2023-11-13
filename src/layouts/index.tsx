@@ -34,8 +34,6 @@ function Layout(props: any) {
         return element;
       });
 
-      console.log('newCont: ', newCont);
-
       dispatch({
         type: 'treeData/changeTree',
         payload: { count: newCont },

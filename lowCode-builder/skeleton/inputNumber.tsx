@@ -3,13 +3,16 @@ import InputNumber from '../components/inputNumber';
 
 const InputNumberSkeleton = {
   type: 'inputnumber',
-  label: '文本',
-  labelAction: "function main(){\n  return '文本';\n}\n",
-  visibility: "function main(){\n  return 'required';\n}\n",
-  dataBinding: {
-    path: 'path',
+  staticProperties: {
+    label: '文本',
+    dataBinding: {
+      path: 'path',
+    },
   },
-  validators: 'function main(){\n  return [];\n}\n',
+  bindingMethod: {
+    labelAction: "function main(){\n  return '文本';\n}\n",
+    visibility: "function main(){\n  return 'required';\n}\n",
+  },
   Component: InputNumber,
 };
 

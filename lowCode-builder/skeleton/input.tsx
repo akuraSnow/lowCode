@@ -3,13 +3,18 @@ import Input from '../components/input';
 
 const InputSkeleton = {
   type: 'input',
-  label: '文本',
-  labelAction: "function main(){\n  return '文本';\n}\n",
-  visibility: "function main(){\n  return 'required';\n}\n",
-  dataBinding: {
-    path: 'path',
+  staticProperties: {
+    label: '文本',
+    dataBinding: {
+      path: 'path',
+    },
   },
-  validators: 'function main(){\n  return [];\n}\n',
+  bindingMethod: {
+    labelAction: "function main(){\n  return '文本';\n}\n",
+    dataSource: [],
+    visibility: "function main(){\n  return 'required';\n}\n",
+    validators: 'function main(){\n  return [];\n}\n',
+  },
   Component: Input,
 };
 
