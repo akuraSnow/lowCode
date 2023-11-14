@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UnitComponent from './component';
 import './index.css';
+import { LayoutElement } from 'dynamic-builder';
 
 export default function RenderProvider(source: any, Component: any) {
   const [children, setChildren] = useState([]);
@@ -8,7 +9,9 @@ export default function RenderProvider(source: any, Component: any) {
   useEffect(() => {
     const observable = source.subscribe({
       next: (v: any) => {
-        setChildren(v.data);
+        const data = LayoutElement.normalizeTreeFormConfig(v.data);
+        setChildren(data);
+        console.log('v.data: ', data);
       },
     });
     return () => observable.unsubscribe();

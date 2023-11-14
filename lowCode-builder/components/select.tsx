@@ -4,7 +4,7 @@ import React from 'react';
 export default function Select(props: any) {
   const {
     control,
-    field: { label, dataSource = [], metaData },
+    field: { label, dataSource = [], metaData, visibility = 'visible' },
   } = props;
 
   return (
@@ -15,6 +15,7 @@ export default function Select(props: any) {
         filterOption={(input: string, option: any) => {
           return (option?.label + option?.children ?? '').indexOf(input) > -1;
         }}
+        disabled={visibility === 'disable'}
         {...metaData}
         {...control.event}
       >

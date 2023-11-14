@@ -3,3 +3,7 @@
 .ant-input-number{
     width: 100% !important;
 }
+
+.ant-form > div{
+     width: 100%;
+}

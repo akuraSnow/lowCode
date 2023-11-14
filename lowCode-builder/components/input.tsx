@@ -1,5 +1,6 @@
 import { Form, Input as FormInput } from 'antd';
 import React from 'react';
+import './index.css';
 
 export default function Input(props: any) {
   const {
@@ -7,6 +8,7 @@ export default function Input(props: any) {
     field: {
       label,
       layoutDefinition: { labelCol, wrapperCol, layout = 'horizontal' },
+      visibility = 'visible',
     },
   } = props;
 
@@ -30,7 +32,11 @@ export default function Input(props: any) {
         validateStatus={validateStatus}
         help={validateMes}
       >
-        <FormInput value={value || ''} {...event} />
+        <FormInput
+          disabled={visibility === 'disable'}
+          value={value || ''}
+          {...event}
+        />
       </Form.Item>
     </Form>
   );

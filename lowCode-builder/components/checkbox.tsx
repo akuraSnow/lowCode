@@ -4,7 +4,7 @@ import { Form, Checkbox as FromCheckbox } from 'antd';
 export default function Checkbox(props: any) {
   const {
     control,
-    field: { label, dataSource = [], metaData },
+    field: { label, dataSource = [], metaData, visibility = 'visible' },
   } = props;
 
   return (
@@ -12,6 +12,7 @@ export default function Checkbox(props: any) {
       <FromCheckbox.Group
         options={dataSource}
         defaultValue={control.value}
+        disabled={visibility === 'disable'}
         {...metaData}
         {...control.event}
       />

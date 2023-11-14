@@ -113,16 +113,32 @@ function getFields(json: any) {
   let arr: any = [];
   json.forEach((item: any, index: any) => {
     item.children.forEach((el: any) => {
-      const { id, type, label, row, column, columnSpan, order, parentRange } =
-        el;
+      const {
+        id,
+        dataSource = [],
+        validators = [],
+        visibility = 'visible',
+        type,
+        label,
+        row,
+        column,
+        columnSpan,
+        order,
+        parentRange,
+      } = el;
+
+      const grid = order.split('').join(' ');
       arr.push({
         id,
         type,
         label,
+        dataSource,
+        validators,
+        visibility,
         dataBinding: {
           path: 'a',
         },
-        layoutDefinition: { row, column, columnSpan, order, parentRange },
+        layoutDefinition: { row, column, columnSpan, grid, parentRange },
       });
     });
   });
@@ -139,8 +155,6 @@ function getJson(json: any, range: string) {
         : [{ type: 'empty', id: item.key.split('-').join('') + '0empty' }];
 
       item.children = item.children.map((res: any, i: number) => {
-        res.row = index;
-        res.column = i;
         res.columnSpan = 12 / item.children.length;
         res.order = item.key.split('-').join('');
         res.parentRange = range;

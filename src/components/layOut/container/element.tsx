@@ -31,7 +31,8 @@ const ElementContainer = (props: any): any => {
     });
   }
 
-  function chooseElContainer(key: any) {
+  function chooseElContainer(key: any, dataSource: any) {
+    console.log('dataSource: ', dataSource);
     chooseComponentSubject.next({
       ...dataSource,
       executeJs: functionObj[dataSource.id] || undefined,
@@ -107,7 +108,7 @@ const ElementContainer = (props: any): any => {
         onClick={(e: any) => {
           e.preventDefault();
           e.stopPropagation();
-          chooseElContainer(dataKey);
+          chooseElContainer(dataKey, dataSource);
         }}
       >
         {operatorBtn(dataSource)}

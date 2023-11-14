@@ -42,7 +42,6 @@ const PropertyBinding = (props: any) => {
           list.forEach((element: any, index: number) => {
             data[element] = res[index].data;
           });
-          console.log('data: ', data);
           setAttributeEl(<Attribute optionList={data}></Attribute>);
           setLoading(false);
         })

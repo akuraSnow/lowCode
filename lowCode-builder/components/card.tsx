@@ -18,6 +18,8 @@ export default function Card(props: any) {
     setActiveTabKey1(key);
   };
 
+  console.log('value: ', value);
+
   const childrenData = () => {
     if (children) {
       return React.createElement(ModelContent as any, {
@@ -31,8 +33,8 @@ export default function Card(props: any) {
       const component = tabList.filter((e: any) => e.key === activeTabKey1)[0]
         .children;
 
-      // @ts-ignore
       return (
+        // @ts-ignore
         <ModelContent
           key={activeTabKey1}
           children={component}

@@ -37,16 +37,11 @@ export const attributeJson = [
                 path: 'label',
               },
               layoutDefinition: {
-                row: 0,
-                column: 1,
-                columnSpan: 12,
-                labelCol: 6,
-                wrapperCol: 24,
                 layout: 'vertical',
               },
               action: {
-                onchange: {
-                  name: 'changeLabel',
+                onblur: {
+                  name: 'changeStaticBind',
                   params: {
                     type: 'label',
                   },
@@ -61,38 +56,25 @@ export const attributeJson = [
                 path: 'dataBinding.path',
               },
               layoutDefinition: {
-                row: 2,
-                column: 1,
-                columnSpan: 12,
-                labelCol: 12,
-                wrapperCol: 24,
                 layout: 'vertical',
               },
               action: {
                 onblur: {
-                  name: 'getData',
+                  name: 'changeStaticBind',
                   params: {
                     type: 'dataBinding',
                   },
                 },
               },
             },
-          ],
-        },
-        {
-          key: 'bindFun',
-          tab: '方法属性',
-          children: [
             {
               id: 'switch1',
               type: 'switch',
-              label: 'dataSource',
+              label: '数据源',
               dataBinding: {
                 path: 'hasdataSource',
               },
-              layoutDefinition: {
-                order: '0',
-              },
+              layoutDefinition: {},
               action: {
                 onchange: {
                   name: 'switchProperties',
@@ -113,91 +95,26 @@ export const attributeJson = [
               dataBinding: {
                 path: 'dataSource',
               },
-              layoutDefinition: {
-                order: '1',
-              },
+              layoutDefinition: {},
               visibility: 'hidden',
-            },
-            {
-              id: 'switch2',
-              type: 'switch',
-              label: 'labelAction',
-              dataBinding: {
-                path: 'haslabelAction',
-              },
-              layoutDefinition: {
-                order: '2',
-              },
               action: {
                 onchange: {
-                  name: 'switchProperties',
+                  name: 'setDataSource',
                   params: {
-                    type: 'labelAction',
+                    type: 'dataSource',
                   },
                 },
               },
-            },
-            {
-              id: 'labelAction',
-              type: 'select',
-              dataSourceAction: 'getDataSource',
-              metaData: {
-                path: 'staticData',
-              },
-              dataBinding: {
-                path: 'labelAction',
-              },
-              layoutDefinition: {
-                order: '3',
-              },
-              visibility: 'hidden',
-            },
-
-            {
-              id: 'switch3',
-              type: 'switch',
-              label: 'visibility',
-              dataBinding: {
-                path: 'hasvisibility',
-              },
-              layoutDefinition: {
-                order: '4',
-              },
-              action: {
-                onchange: {
-                  name: 'switchProperties',
-                  params: {
-                    type: 'visibility',
-                  },
-                },
-              },
-            },
-            {
-              id: 'visibility',
-              type: 'select',
-              dataSourceAction: 'getDataSource',
-              metaData: {
-                path: 'visibility',
-              },
-              dataBinding: {
-                path: 'visibility',
-              },
-              layoutDefinition: {
-                order: '5',
-              },
-              visibility: 'hidden',
             },
 
             {
               id: 'switch4',
               type: 'switch',
-              label: 'validators',
+              label: '验证规则',
               dataBinding: {
                 path: 'hasvalidators',
               },
-              layoutDefinition: {
-                order: '6',
-              },
+              layoutDefinition: {},
               action: {
                 onchange: {
                   name: 'switchProperties',
@@ -218,9 +135,93 @@ export const attributeJson = [
               dataBinding: {
                 path: 'validators',
               },
-              layoutDefinition: {
-                order: '7',
+              layoutDefinition: {},
+              visibility: 'hidden',
+              action: {
+                onchange: {
+                  name: 'setValidators',
+                  params: {
+                    type: 'validators',
+                  },
+                },
               },
+            },
+            {
+              id: 'switch3',
+              type: 'switch',
+              label: '显示状态',
+              dataBinding: {
+                path: 'hasvisibility',
+              },
+              layoutDefinition: {},
+              action: {
+                onchange: {
+                  name: 'switchProperties',
+                  params: {
+                    type: 'visibility',
+                  },
+                },
+              },
+            },
+            {
+              id: 'visibility',
+              type: 'select',
+              dataSource: [
+                { label: '隐藏', value: 'hidden' },
+                { label: '必填', value: 'required' },
+                { label: '禁用', value: 'disable' },
+              ],
+              metaData: {
+                path: 'visibility',
+              },
+              dataBinding: {
+                path: 'visibility',
+              },
+              layoutDefinition: {},
+              visibility: 'hidden',
+              action: {
+                onchange: {
+                  name: 'setVisibility',
+                  params: {
+                    type: 'visibility',
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          key: 'bindFun',
+          tab: '方法属性',
+          children: [
+            {
+              id: 'switch2',
+              type: 'switch',
+              label: 'labelAction',
+              dataBinding: {
+                path: 'haslabelAction',
+              },
+              layoutDefinition: {},
+              action: {
+                onchange: {
+                  name: 'switchProperties',
+                  params: {
+                    type: 'labelAction',
+                  },
+                },
+              },
+            },
+            {
+              id: 'labelAction',
+              type: 'select',
+              dataSourceAction: 'getDataSource',
+              metaData: {
+                path: 'staticData',
+              },
+              dataBinding: {
+                path: 'labelAction',
+              },
+              layoutDefinition: {},
               visibility: 'hidden',
             },
           ],
@@ -229,126 +230,3 @@ export const attributeJson = [
     },
   },
 ];
-
-// {
-//   id: 'Checkbox',
-//   type: 'checkbox',
-//   label: '其他属性',
-//   dataBinding: {
-//     path: 'transfer',
-//   },
-//   layoutDefinition: {
-//     row: 2,
-//     column: 1,
-//     columnSpan: 12,
-//     labelCol: 12,
-//     wrapperCol: 24,
-//     layout: 'vertical',
-//   },
-//   metaData: {
-//     titles: ['事件', '已选绑定']
-//   },
-//   action: {
-//     onchange: {
-//       name: 'getData',
-//       params: {
-//         type: 'dataBinding',
-//       },
-//     },
-//   },
-// },
-// {
-//   id: 'dataSource',
-//   type: 'codeeditor',
-//   label: 'dataSource',
-//   dataBinding: {
-//     path: 'dataSource',
-//   },
-//   layoutDefinition: {
-//     row: 1,
-//     column: 1,
-//     columnSpan: 12,
-//     labelCol: 12,
-//     wrapperCol: 24,
-//     layout: 'vertical',
-//   },
-//   action: {
-//     onchange: {
-//       name: 'getData',
-//       params: {
-//         type: 'dataSource',
-//       },
-//     },
-//   },
-// },
-
-// {
-//   id: 'labelAction',
-//   type: 'codeeditor',
-//   label: 'labelAction',
-//   dataBinding: {
-//     path: 'labelAction',
-//   },
-//   layoutDefinition: {
-//     row: 4,
-//     column: 1,
-//     columnSpan: 12,
-//     labelCol: 12,
-//     wrapperCol: 24,
-//     layout: 'vertical',
-//   },
-//   action: {
-//     onchange: {
-//       name: 'getData',
-//       params: {
-//         type: 'labelAction',
-//       },
-//     },
-//   },
-// },
-// {
-//   id: 'validators',
-//   type: 'codeeditor',
-//   label: 'validators',
-//   dataBinding: {
-//     path: 'validators',
-//   },
-//   layoutDefinition: {
-//     row: 6,
-//     column: 0,
-//     columnSpan: 12,
-//     wrapperCol: 24,
-//     layout: 'vertical',
-//   },
-//   action: {
-//     onchange: {
-//       name: 'getData',
-//       params: {
-//         type: 'validators',
-//       },
-//     },
-//   },
-// },
-// {
-//   id: 'visibility',
-//   type: 'codeeditor',
-//   label: 'visibility',
-//   dataBinding: {
-//     path: 'visibility',
-//   },
-//   layoutDefinition: {
-//     row: 8,
-//     column: 0,
-//     columnSpan: 12,
-//     wrapperCol: 24,
-//     layout: 'vertical',
-//   },
-//   action: {
-//     onchange: {
-//       name: 'getData',
-//       params: {
-//         type: 'visibility',
-//       },
-//     },
-//   },
-// },

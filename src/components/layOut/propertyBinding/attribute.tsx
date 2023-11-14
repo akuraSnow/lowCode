@@ -23,8 +23,16 @@ class Attribute {
 
     this.optionList = optionList;
 
+    this.changeStaticBind = debounce(this.changeStaticBind, 1000);
+    this.getData = debounce(this.getData, 1000);
+  }
+
+  componentDidMount() {
+    console.log(this);
+
     chooseComponentSubject.subscribe((res: any) => {
-      const { label, type, executeJs } = res;
+      console.log('res: ', res);
+      const { label, type, dataBinding, dataSource, visibility } = res;
 
       this.componentData = res;
 
@@ -36,26 +44,24 @@ class Attribute {
         } else {
           const json = iocContainer.skeleton.get(type);
 
-          const staticJson = attributeJson.filter((item: any) =>
-            json.staticProperties.hasOwnProperty(item.id),
-          );
-          const bindingMethod = attributeJson.filter((item: any) =>
-            json.staticProperties.hasOwnProperty(item.id),
-          );
-
-          // const jsonData = attributeJson.filter((item: any) =>
-          //   json.hasOwnProperty(item.id),
-          // );
-
-          this.viewModel = {
-            ...json,
-            ...executeJs,
-            label,
-          };
+          // setTimeout(() => {
+          //   this.viewModel = {
+          //     label,
+          //     dataBinding,
+          //     dataSource,
+          //     visibility
+          //   };
+          // })
 
           this.setJson({
             fields: attributeJson,
           });
+
+          this.viewModel = {
+            static: {
+              label: 'fdfd',
+            },
+          };
         }
       } else {
         this.setJson({
@@ -85,14 +91,9 @@ class Attribute {
         });
       }
     });
-
-    this.changeLabel = debounce(this.changeLabel, 1000);
-    this.getData = debounce(this.getData, 1000);
   }
 
   getDataSource(res: any) {
-    console.log('res: ', res);
-
     const {
       field: {
         metaData: { path },
@@ -106,7 +107,6 @@ class Attribute {
         value: content,
       };
     });
-    console.log('data: ', data);
     return data;
   }
 
@@ -124,28 +124,63 @@ class Attribute {
   }
 
   changeWidth() {
-    console.warn('value: ', this.viewModel);
-
     updateDataSubject.next({
       name: 'width',
       value: JSON.parse(JSON.stringify(this.viewModel))['width'],
     });
   }
 
-  changeLabel(params: any) {
+  changeStaticBind(params: any) {
     const { type } = params;
+    const value = JSON.parse(JSON.stringify(this.viewModel))[type];
+    if (Object.prototype.toString.call(value) === '[object Object]') {
+      delete value.__path__;
+    }
 
     updateDataSubject.next({
       name: type,
-      value: JSON.parse(JSON.stringify(this.viewModel))[type],
+      value: value,
     });
+  }
+
+  setDataSource(params: any) {
+    const { type } = params;
+    const value = JSON.parse(JSON.stringify(this.viewModel))[type];
+    updateDataSubject.next({
+      name: type,
+      value: new Function(`return ${value}`)(),
+    });
+  }
+  setValidators(params: any) {
+    const { type } = params;
+    const value = JSON.parse(JSON.stringify(this.viewModel))[type];
+    const validatorList = value.map((fn: any) => ({ name: value }));
+
+    updateDataSubject.next({
+      name: type,
+      value: validatorList,
+    });
+  }
+  setVisibility(params: any) {
+    const { type } = params;
+    const value = JSON.parse(JSON.stringify(this.viewModel))[type];
+
+    updateDataSubject.next({
+      name: type,
+      value,
+    });
+  }
+
+  setField(type: any, value: any) {
+    const { id } = this.props.componentData;
+    updateFunSubject.next({ id, type, value });
   }
 
   getData(params: any) {
     const { type } = params;
     const { id } = this.props.componentData;
 
-    console.log(this.viewModel);
+    console.log(JSON.parse(JSON.stringify(this.viewModel))[type]);
 
     updateFunSubject.next({
       id,

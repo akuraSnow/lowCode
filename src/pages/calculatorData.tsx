@@ -27,8 +27,6 @@ export default class CalculatorData {
   async getCalculatorData() {
     return new Promise(async (res) => {
       const { data } = await getJsonByPath({ path: 'calculator' });
-      console.log('data: ', data);
-
       if (data && data.length) {
         res(
           data.map((item: any, index: any) => {
