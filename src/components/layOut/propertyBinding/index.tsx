@@ -16,6 +16,7 @@ import 'codemirror/theme/the-matrix.css';
 import 'codemirror/theme/night.css';
 import Attribute from './attribute';
 import { getJsonByPath } from '@/services/api';
+import Property from './property';
 
 const PropertyBinding = (props: any) => {
   const {
@@ -24,7 +25,7 @@ const PropertyBinding = (props: any) => {
   } = props;
 
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [attributeEl, setAttributeEl] = React.useState<any>(<></>);
+  const [optionList, setOptionList] = React.useState<any>({});
 
   const onChange = (key: string) => {
     console.log(key);
@@ -42,7 +43,7 @@ const PropertyBinding = (props: any) => {
           list.forEach((element: any, index: number) => {
             data[element] = res[index].data;
           });
-          setAttributeEl(<Attribute optionList={data}></Attribute>);
+          setOptionList(data);
           setLoading(false);
         })
         .catch((err: any) => {
@@ -56,7 +57,7 @@ const PropertyBinding = (props: any) => {
     {
       key: '1',
       label: '属性',
-      children: attributeEl,
+      children: <Property optionList={optionList}></Property>,
     },
     {
       key: '2',

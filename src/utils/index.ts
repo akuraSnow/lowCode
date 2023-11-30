@@ -14,7 +14,15 @@ export function serialized(list: any, key: any) {
       );
     })
     .map((item: any, index: number) => {
+      if (
+        Array.isArray(item.children) &&
+        item.children.length === 1 &&
+        item.children[0].type === 'container'
+      ) {
+        item = item.children[0];
+      }
       item.key = key ? key + '-' + index : `${index}`;
+
       if (Array.isArray(item.children)) {
         item.children = serialized(item.children, item.key);
       }
@@ -76,12 +84,14 @@ function nestedObject(arr: any, findKey: any, fn: any) {
 }
 
 export function getInitJson(
-  { type: ownerType, key, children }: any,
+  { type: ownerType, key, width, height, children }: any,
   type: string,
 ) {
   return {
     key,
     type,
+    width,
+    height,
     children: [
       { key: key + '-0', type: ownerType, children: children },
       { key: key + '-1', type: 'container', children: [] },
@@ -90,11 +100,15 @@ export function getInitJson(
 }
 
 export function updateFelidJson(fieldsJson: any) {
-  let json = getJson(JSON.parse(JSON.stringify(fieldsJson)), 'colContainer');
-  console.log('json: ', json);
+  let { elementArr, scaleArr } = getJson(
+    JSON.parse(JSON.stringify(fieldsJson)),
+    'colContainer',
+  );
+  console.log('scaleArr: ', scaleArr);
+  console.log('json: ', elementArr);
   // const rowList = addColumns(json);
   // console.log('json: ', rowList);
-  return getFields(json);
+  return { scaleArr, fieldsJson: getFields(elementArr) };
 }
 
 export function bindExecuteJs(fieldsJson: any, funcObj: any) {
@@ -114,14 +128,9 @@ function getFields(json: any) {
   json.forEach((item: any, index: any) => {
     item.children.forEach((el: any) => {
       const {
-        id,
-        dataSource = [],
-        validators = [],
+        validator = [],
         visibility = 'visible',
-        type,
-        label,
-        row,
-        column,
+        dataBinding: { path = 'empty' } = {},
         columnSpan,
         order,
         parentRange,
@@ -129,16 +138,13 @@ function getFields(json: any) {
 
       const grid = order.split('').join(' ');
       arr.push({
-        id,
-        type,
-        label,
-        dataSource,
-        validators,
+        ...el,
+        validator,
         visibility,
         dataBinding: {
-          path: 'a',
+          path: path,
         },
-        layoutDefinition: { row, column, columnSpan, grid, parentRange },
+        layout: { span: columnSpan, grid, parentRange },
       });
     });
   });
@@ -146,29 +152,42 @@ function getFields(json: any) {
 }
 
 function getJson(json: any, range: string) {
-  let arr: any = [];
+  let elementArr: any = [];
+  let scaleArr: any = [];
 
   json.forEach((item: any, index: number) => {
-    if (item.type === 'container') {
-      item.children = item.children.length
-        ? item.children
-        : [{ type: 'empty', id: item.key.split('-').join('') + '0empty' }];
+    const { type, key, scale, children, width, height } = item;
+    if (type === 'container') {
+      item.children = children.length
+        ? children
+        : [{ type: 'empty', id: key.split('-').join('') + '0empty' }];
 
       item.children = item.children.map((res: any, i: number) => {
-        res.columnSpan = 12 / item.children.length;
         res.order = item.key.split('-').join('');
         res.parentRange = range;
         return res;
       });
-      arr.push(item);
+      elementArr.push(item);
+    }
+
+    if (width || height) {
+      scaleArr.push({
+        span: width || height,
+        grid: item.key.split('-').join(' '),
+      });
     }
 
     if (item.children) {
-      arr.push(...getJson(item.children, item.type));
+      const { elementArr: childElementArr, scaleArr: childScaleArr } = getJson(
+        item.children,
+        item.type,
+      );
+      elementArr.push(...childElementArr);
+      scaleArr.push(...childScaleArr);
     }
   });
 
-  return arr;
+  return { scaleArr, elementArr };
 }
 
 export function listToTree(list: any[], pid: string = ''): any {

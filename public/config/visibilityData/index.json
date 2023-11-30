@@ -7,7 +7,7 @@
       "metaData": {
         "type": "primary"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 1,
         "columnSpan": 2
@@ -58,7 +58,7 @@
           }
         ]
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 1,
         "column": 1,
         "columnSpan": 12
@@ -80,7 +80,7 @@
         "destroyOnClose": true,
         "width": 1000
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 10,
         "column": 1,
         "columnSpan": 12

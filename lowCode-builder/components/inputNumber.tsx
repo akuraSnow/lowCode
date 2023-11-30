@@ -2,13 +2,13 @@ import { Form, InputNumber as FormInputNumber } from 'antd';
 import React from 'react';
 import './index.css';
 
-export default function InputNumber(props: any) {
+export default function Number(props: any) {
   const {
     control: { value, event, errorList },
     field: {
       label,
       metaData,
-      layoutDefinition: { labelCol, wrapperCol, layout = 'horizontal' },
+      layout: { labelCol, wrapperCol, layout = 'horizontal' },
     },
   } = props;
 

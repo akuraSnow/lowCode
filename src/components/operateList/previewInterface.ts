@@ -13,9 +13,7 @@ class Home {
     let fields: any = sessionStorage.getItem('name');
     console.log('fields: ', fields);
 
-    this.setJson({
-      fields: JSON.parse(fields),
-    });
+    this.setJson(JSON.parse(fields));
   }
 }
 

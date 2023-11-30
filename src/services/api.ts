@@ -21,7 +21,6 @@
 const baseUrl = 'http://localhost:8080/';
 
 const queryString = (params: any) => {
-  console.log('params: ', params);
   if (Object.keys(JSON.parse(params)).length > 0) {
     return (
       '?' +

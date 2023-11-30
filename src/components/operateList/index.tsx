@@ -4,13 +4,12 @@ import { useState } from 'react';
 import { Button, Drawer, Space } from 'antd';
 import Home from './previewInterface';
 import React from 'react';
-import { bindExecuteJs, updateFelidJson } from '@/utils';
+import { updateFelidJson } from '@/utils';
 import styles from './index.less';
 
 import { MailOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { saveJson } from '@/services/api';
 
 function OperateList(props: any) {
   const {
@@ -24,10 +23,16 @@ function OperateList(props: any) {
 
   const showModal = async () => {
     console.log('count: ', count);
-    let fields = updateFelidJson(count);
-    console.log('fields: ', fields);
+    let { fieldsJson, scaleArr } = updateFelidJson(count);
+    console.log('fields: ', fieldsJson);
 
-    sessionStorage.setItem('name', JSON.stringify(fields));
+    const data = {
+      fields: fieldsJson,
+      layout: scaleArr,
+      executeFunction: functionObj,
+    };
+
+    sessionStorage.setItem('name', JSON.stringify(data));
     setOpen(true);
   };
 

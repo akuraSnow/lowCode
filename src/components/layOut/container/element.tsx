@@ -10,6 +10,7 @@ const ElementContainer = (props: any): any => {
     dataSource,
     notShowCutModel,
     width,
+    height,
     treeData: { count, chooseKey, functionObj },
   } = props;
 
@@ -32,7 +33,6 @@ const ElementContainer = (props: any): any => {
   }
 
   function chooseElContainer(key: any, dataSource: any) {
-    console.log('dataSource: ', dataSource);
     chooseComponentSubject.next({
       ...dataSource,
       executeJs: functionObj[dataSource.id] || undefined,
@@ -96,12 +96,16 @@ const ElementContainer = (props: any): any => {
     );
   };
 
-  const style = width ? { width: `${width}px` } : { flex: 1 };
+  const scale = height || width;
+  const style = scale
+    ? { flex: scale.indexOf('px') > -1 ? `0 0 ${scale}` : `1 1 ${scale}` }
+    : {};
+  // console.log('style: ', style);
 
   return (
     children && (
       <div
-        // style={style}
+        style={style}
         className={`${styles.itemContainer} ${
           chooseKey === dataKey && styles.chooseBtn
         }`}

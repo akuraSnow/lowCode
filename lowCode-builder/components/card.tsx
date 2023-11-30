@@ -18,8 +18,6 @@ export default function Card(props: any) {
     setActiveTabKey1(key);
   };
 
-  console.log('value: ', value);
-
   const childrenData = () => {
     if (children) {
       return React.createElement(ModelContent as any, {
@@ -28,6 +26,7 @@ export default function Card(props: any) {
         target,
         setCloseViewModel,
         viewModel: value,
+        key: activeTabKey1,
       });
     } else if (tabList) {
       const component = tabList.filter((e: any) => e.key === activeTabKey1)[0]
@@ -64,15 +63,8 @@ class ModelContent {
 
   constructor(props: any) {
     this.parent = props;
-    const {
-      viewModel = {},
-      jsonName,
-      target: fatherComponent,
-      children,
-    } = props;
+    const { jsonName, target: fatherComponent, children } = props;
     this.props = fatherComponent.target;
-    this.viewModel = viewModel;
-
     if (children && Array.isArray(children)) {
       this.setJson({ fields: children });
     } else if (jsonName) {
@@ -81,6 +73,14 @@ class ModelContent {
       });
     }
   }
+
+  onPropsChange = (props: any) => {
+    const { viewModel = {} } = props;
+
+    if (JSON.stringify(this.viewModel) !== JSON.stringify(viewModel)) {
+      this.viewModel.label = viewModel.label;
+    }
+  };
 
   componentDidUpdate() {
     this.parent.setCloseViewModel(() => this);

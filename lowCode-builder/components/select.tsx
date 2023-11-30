@@ -17,7 +17,7 @@ export default function Select(props: any) {
         }}
         disabled={visibility === 'disable'}
         {...metaData}
-        {...control.event}
+        onChange={control.event.onChange}
       >
         {dataSource.map(({ value, label }: any, index: number) => (
           <FromSelect.Option key={index} value={value}>

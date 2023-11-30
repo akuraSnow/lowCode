@@ -29,14 +29,17 @@ function Layout(props: any) {
 
   useEffect(() => {
     const a = updateDataSubject.subscribe((res: any) => {
+      console.log('res: ', res);
+      let newFunctionObj: any = JSON.parse(JSON.stringify(functionObj));
       const newCont = operateItem(count, chooseKey, (element: any) => {
         element[res.name] = res.value;
         return element;
       });
 
+      newFunctionObj = { ...newFunctionObj, ...res.optionList };
       dispatch({
         type: 'treeData/changeTree',
-        payload: { count: newCont },
+        payload: { count: newCont, functionObj: newFunctionObj },
       });
     });
 

@@ -7,7 +7,7 @@
       "dataBinding": {
         "path": "name"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 0,
         "columnSpan": 12,
@@ -21,7 +21,7 @@
       "dataBinding": {
         "path": "rowName"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 0,
         "labelCol": 4,
@@ -37,7 +37,7 @@
       "metaData": {
         "type": "primary"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 1,
         "columnSpan": 2,
@@ -57,7 +57,7 @@
       "metaData": {
         "type": "primary"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 1,
         "columnSpan": 2,
@@ -93,7 +93,7 @@
         ],
         "editable": true
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 1,
         "column": 1,
         "columnSpan": 12,
@@ -107,7 +107,7 @@
       "metaData": {
         "type": "primary"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 1,
         "columnSpan": 2,

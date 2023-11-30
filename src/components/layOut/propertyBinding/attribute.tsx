@@ -4,9 +4,14 @@ import {
   updateFunSubject,
 } from '@/services';
 import { PageFormBuilder, iocContainer } from 'dynamic-builder';
-import { attributeJson } from '../../../../lowCode-builder/materialPool/componentList';
+import {
+  attributeJson,
+  widthContainerJson,
+  heightContainerJson,
+} from '../../../../lowCode-builder/materialPool/componentList';
 import { connect } from 'umi';
-import { debounce, throttle } from 'lodash';
+import { cloneDeep, debounce, throttle } from 'lodash';
+import { operateItem } from '@/utils';
 
 @PageFormBuilder({
   json: [],
@@ -16,9 +21,9 @@ class Attribute {
   [x: string]: any;
 
   private componentData: any;
+  private chooseKey: any;
 
   constructor(props: any) {
-    console.log('props: ', props);
     const { optionList } = props;
 
     this.optionList = optionList;
@@ -27,87 +32,134 @@ class Attribute {
     this.getData = debounce(this.getData, 1000);
   }
 
-  componentDidMount() {
-    console.log(this);
+  componentDidMount() {}
 
-    chooseComponentSubject.subscribe((res: any) => {
-      console.log('res: ', res);
-      const { label, type, dataBinding, dataSource, visibility } = res;
-
-      this.componentData = res;
-
-      if (type !== 'container') {
-        if (!iocContainer.skeleton.has(type)) {
-          this.setJson({
-            fields: [],
-          });
+  onPropsChange(props: any) {
+    this.props = props;
+    const {
+      optionList,
+      container,
+      treeData: { count, chooseKey },
+    } = this.props;
+    if (chooseKey !== this.chooseKey) {
+      operateItem(cloneDeep(count), chooseKey, (element: any, i: any) => {
+        if (element.type == 'container') {
+          this.handleContainer(element);
         } else {
-          const json = iocContainer.skeleton.get(type);
-
-          // setTimeout(() => {
-          //   this.viewModel = {
-          //     label,
-          //     dataBinding,
-          //     dataSource,
-          //     visibility
-          //   };
-          // })
-
-          this.setJson({
-            fields: attributeJson,
-          });
-
-          this.viewModel = {
-            static: {
-              label: 'fdfd',
-            },
-          };
+          this.handleComponent(element);
         }
+      });
+      this.chooseKey = chooseKey;
+    }
+
+    if (JSON.stringify(optionList) !== JSON.stringify(this.optionList)) {
+      this.optionList = optionList;
+    }
+  }
+
+  handleContainer(element: any) {
+    const {
+      treeData: { count, chooseKey },
+    } = this.props;
+
+    const keyList = chooseKey.split('-');
+    const parentKey = keyList.splice(0, keyList.length - 1).join('-');
+
+    operateItem(cloneDeep(count), parentKey, (element: any, i: any) => {
+      const { type } = element;
+      const { width: elWidth, height: elHeight } = element.children.filter(
+        (item: any) => item.key === chooseKey,
+      )[0];
+
+      let viewModel: any;
+      let json: any;
+      let scaleValue: any;
+
+      if (type === 'rowContainer') {
+        json = widthContainerJson;
+        scaleValue = elWidth;
       } else {
-        this.setJson({
-          fields: [
-            {
-              id: '2',
-              type: 'input',
-              label: 'width',
-              dataBinding: {
-                path: 'width',
-              },
-              layoutDefinition: {
-                row: 0,
-                column: 0,
-                labelCol: 4,
-                wrapperCol: 16,
-                columnSpan: 12,
-                order: '00',
-              },
-              action: {
-                onblur: {
-                  name: 'changeWidth',
-                },
-              },
-            },
-          ],
-        });
+        json = heightContainerJson;
+        scaleValue = elHeight;
       }
+
+      if (!scaleValue) {
+        viewModel = {
+          scaleValue: 100,
+          unit: '%',
+        };
+      } else {
+        const isPx = scaleValue.indexOf('px') > -1;
+        const value = scaleValue
+          ? isPx
+            ? scaleValue.replace('px', '')
+            : scaleValue.replace('%', '')
+          : 100;
+        viewModel = {
+          scaleValue: value,
+          unit: isPx ? 'px' : '%',
+        };
+      }
+
+      this.setJson({ fields: [] });
+
+      setTimeout(() => {
+        this.setJson({ fields: json });
+      }, 10);
+
+      this.viewModel.scaleValue = viewModel.scaleValue;
+      this.viewModel.unit = viewModel.unit;
     });
   }
 
-  getDataSource(res: any) {
+  handleComponent(element: any) {
+    const {
+      label,
+      type,
+      dataBinding,
+      dataSource,
+      visibility,
+      validator,
+      labelAction,
+    } = element;
+    if (!iocContainer.skeleton.has(type)) {
+      this.setJson({
+        fields: [],
+      });
+    } else {
+      const hasvisibility = !!visibility;
+      const hasdataSource = !!dataSource;
+      const haslabelAction = !!labelAction;
+      const hasvalidators = !!validator;
+
+      this.viewModel = {
+        label: label,
+        dataBinding,
+        visibility,
+        labelAction,
+        hasvisibility,
+        hasdataSource,
+        haslabelAction,
+        hasvalidators,
+      };
+
+      this.setJson({ fields: [] });
+
+      setTimeout(() => {
+        this.setJson({
+          fields: attributeJson,
+        });
+      }, 10);
+    }
+  }
+
+  checkVisible(params: any) {
     const {
       field: {
-        metaData: { path },
+        dataBinding: { path },
       },
-    } = res;
-
-    const data = this.props.optionList[path].map((item: any) => {
-      const { name, content } = item;
-      return {
-        label: name,
-        value: content,
-      };
-    });
-    return data;
+    } = params;
+    return this.viewModel[`has${path}`] ? 'visible' : 'hidden';
   }
 
   switchProperties(params: any) {
@@ -123,10 +175,42 @@ class Attribute {
     ]);
   }
 
-  changeWidth() {
-    updateDataSubject.next({
-      name: 'width',
-      value: JSON.parse(JSON.stringify(this.viewModel))['width'],
+  getDataSource(res: any) {
+    const {
+      field: {
+        metaData: { path },
+      },
+    } = res;
+
+    const data = this.optionList[path].map((item: any) => {
+      const { name, content } = item;
+      return {
+        label: name,
+        value: name,
+      };
+    });
+    return data;
+  }
+
+  changeWidth({ type }: any) {
+    console.log('params: ', type);
+
+    const {
+      dispatch,
+      treeData: { count, chooseKey },
+    } = this.props;
+
+    const newCont = operateItem(count, chooseKey, (element: any) => {
+      const scale = `${this.viewModel.scaleValue || 100}${
+        this.viewModel.unit || '%'
+      }`;
+      element[type] = scale;
+      return element;
+    });
+
+    dispatch({
+      type: 'treeData/changeTree',
+      payload: { count: newCont },
     });
   }
 
@@ -146,19 +230,31 @@ class Attribute {
   setDataSource(params: any) {
     const { type } = params;
     const value = JSON.parse(JSON.stringify(this.viewModel))[type];
+    const funValue = this.optionList[type].filter(
+      (e: any) => e.name === value,
+    )[0];
+
     updateDataSubject.next({
-      name: type,
-      value: new Function(`return ${value}`)(),
+      name: 'dataSourceAction',
+      value: value,
+      optionList: { [value]: `function main(){ return ${funValue.content};}` },
     });
   }
   setValidators(params: any) {
     const { type } = params;
     const value = JSON.parse(JSON.stringify(this.viewModel))[type];
-    const validatorList = value.map((fn: any) => ({ name: value }));
+    const calculatorValue = this.optionList.calculator.filter((e: any) =>
+      value.includes(e.name),
+    );
+    const funValue: any = {};
+    calculatorValue.forEach(({ name, content }: any) => {
+      funValue[name] = content;
+    });
 
     updateDataSubject.next({
-      name: type,
-      value: validatorList,
+      name: 'validator',
+      value: calculatorValue.map((e: any) => ({ name: e.name })),
+      optionList: funValue,
     });
   }
   setVisibility(params: any) {
@@ -172,13 +268,13 @@ class Attribute {
   }
 
   setField(type: any, value: any) {
-    const { id } = this.props.componentData;
+    const { id } = this.componentData;
     updateFunSubject.next({ id, type, value });
   }
 
   getData(params: any) {
     const { type } = params;
-    const { id } = this.props.componentData;
+    const { id } = this.componentData;
 
     console.log(JSON.parse(JSON.stringify(this.viewModel))[type]);
 

@@ -39,7 +39,7 @@ class Control {
   }
 
   publishEvent(eventType: string, val: any) {
-    const value = val.target ? val.target.value : val;
+    const value = val && val.target ? val.target.value : val;
     const { action, dataBinding } = this.field;
 
     if (dataBinding && dataBinding.path) {
@@ -92,10 +92,13 @@ class Control {
     defaultReturn?: any,
   ) {
     try {
-      if (iocContainer[extensionName].has(name)) {
+      if (
+        iocContainer[extensionName] &&
+        iocContainer[extensionName].has(name)
+      ) {
         return iocContainer[extensionName].get(name).call(this, value);
       }
-      return this.target.executeAction(name, this) || defaultReturn;
+      return this.target.executeAction(name, value) || defaultReturn;
     } catch (error) {
       console.error(`未注册对应的函数${name}, ${error}`);
     }

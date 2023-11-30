@@ -9,8 +9,8 @@ export default function UnitComponent(props: any) {
   const handleForceupdateMethod = useCallback(() => updateState({}), []);
 
   useEffect(() => {
-    const observable = Component.subscript(field, (res: any) => {
-      setField(res.field);
+    const observable = Component.subscript(ElementList, (res: any) => {
+      setField(JSON.parse(JSON.stringify(res.field)));
       handleForceupdateMethod();
     });
 
@@ -18,8 +18,10 @@ export default function UnitComponent(props: any) {
   }, []);
 
   return field.visibility !== 'hidden' ? (
-    <Element field={field} control={control} />
+    <div className="component-box">
+      <Element field={field} control={control} />
+    </div>
   ) : (
-    <div></div>
+    <></>
   );
 }

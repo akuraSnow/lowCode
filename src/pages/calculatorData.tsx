@@ -70,7 +70,7 @@ export default class CalculatorData {
   }
 
   async handleOk(params: any, self: any) {
-    await updateJsonByPath({ ...params, path: 'calculator' });
+    await updateJsonByPath({ ...this.viewModel.modal1, path: 'calculator' });
     const dataSource = await this.getCalculatorData();
     this.updateField([
       {

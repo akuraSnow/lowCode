@@ -8,11 +8,7 @@ export default function CodeEditor(props: any) {
     field: {
       id,
       label,
-      layoutDefinition: {
-        labelCol = 8,
-        wrapperCol = 16,
-        layout = 'horizontal',
-      } = {},
+      layout: { labelCol = 8, wrapperCol = 16, layout = 'horizontal' } = {},
       css: { height = '200px' } = {},
       dataBinding: { path },
     },
@@ -37,7 +33,7 @@ export default function CodeEditor(props: any) {
           language="javascript"
           height={height}
           value={value || "function  main(){\n  return '';\n}\n"}
-          {...event}
+          onChange={event.onChange}
         />
       </Form.Item>
     </Form>

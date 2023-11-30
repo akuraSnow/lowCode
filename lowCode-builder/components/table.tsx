@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  InputNumber,
-  Popconfirm,
-  Table as TableForm,
-  Typography,
-} from 'antd';
+import { Form, Input, Popconfirm, Table as TableForm, Typography } from 'antd';
 
 const { Column, ColumnGroup } = TableForm;
 

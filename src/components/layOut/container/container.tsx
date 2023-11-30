@@ -49,7 +49,7 @@ const Container = (props: any): any => {
         field: {
           id: key,
           label: '文本',
-          layoutDefinition: {},
+          layout: {},
           css: {},
           dataBinding: { path: '' },
           ...item,

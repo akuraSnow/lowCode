@@ -7,7 +7,7 @@
       "dataBinding": {
         "path": "name"
       },
-      "layoutDefinition": {
+      "layout": {
         "row": 0,
         "column": 0,
         "labelCol": 4,
@@ -24,7 +24,7 @@
         "path": "content"
       },
       "validator": [],
-      "layoutDefinition": {
+      "layout": {
         "row": 1,
         "column": 0,
         "labelCol": 4,
