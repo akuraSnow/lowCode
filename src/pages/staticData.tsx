@@ -15,6 +15,7 @@ export default class staticData {
   [x: string]: any;
 
   staticDataList: any = [];
+  tableMetaData: any = {};
   columns: any = [
     {
       title: '操作',
@@ -37,7 +38,30 @@ export default class staticData {
   showModel(params: any) {
     this.viewModel.model1 = {
       name: '',
+      rowName: '',
       content: '',
+    };
+
+    this.staticDataList = [];
+    this.columns = [
+      {
+        title: '操作',
+        dataIndex: 'operate',
+        key: 'operate',
+        render: [
+          {
+            type: 'save',
+            element: '<div>保存</div>',
+            onclick: {
+              name: 'saveData',
+            },
+          },
+        ],
+      },
+    ];
+    this.tableMetaData = {
+      columns: this.columns,
+      editable: true,
     };
     this.updateField([
       { id: 'model111', metaData: { title: '新增', open: true } },
@@ -73,9 +97,47 @@ export default class staticData {
   }
 
   openModels(res: any) {
+    const metaData: any = new Function(`return ${res.content}`)();
+    const columns: any[] = [
+      {
+        title: '操作',
+        dataIndex: 'operate',
+        key: 'operate',
+        render: [
+          {
+            type: 'save',
+            element: '<div>保存</div>',
+            onclick: {
+              name: 'saveData',
+            },
+          },
+        ],
+      },
+    ];
+
+    for (const key in metaData[0]) {
+      if (Object.prototype.hasOwnProperty.call(metaData[0], key)) {
+        if (!['key'].includes(key)) {
+          columns.push({
+            title: key,
+            dataIndex: key,
+            key: key,
+          });
+        }
+      }
+    }
+
     this.viewModel.model1 = {
       name: res.name,
-      content: res.content,
+      rowName: '',
+      content: metaData,
+    };
+
+    this.staticDataList = metaData;
+    this.columns = columns;
+    this.tableMetaData = {
+      columns,
+      editable: true,
     };
 
     this.updateField([
@@ -87,6 +149,14 @@ export default class staticData {
         },
       },
     ]);
+  }
+
+  getTableMetaData() {
+    return this.props.tableMetaData;
+  }
+
+  modelTableDataSource() {
+    return this.props.staticDataList;
   }
 
   async handleOk(params: any, self: any) {
@@ -165,6 +235,11 @@ export default class staticData {
       this.props.columns = this.props.columns.filter(
         (e: any) => e.key !== rowName,
       );
+
+      this.props.staticDataList = this.props.staticDataList.map((item: any) => {
+        delete item[rowName];
+        return item;
+      });
       this.updateField([
         {
           id: 'table222',

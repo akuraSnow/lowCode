@@ -1,0 +1,90 @@
+{
+  "fields": [
+    {
+      "id": "addValue",
+      "type": "button",
+      "label": "添加",
+      "metaData": {
+        "type": "primary"
+      },
+      "layout": {
+        "row": 0,
+        "column": 1,
+        "columnSpan": 2
+      },
+      "action": {
+        "onclick": {
+          "name": "showModel",
+          "params": {
+            "type": "label"
+          }
+        }
+      }
+    },
+    {
+      "id": "table",
+      "type": "table",
+      "dataSourceAction": "getStaticData",
+      "metaData": {
+        "columns": [
+          {
+            "title": "Name",
+            "dataIndex": "name",
+            "key": "name"
+          },
+          {
+            "title": "内容",
+            "dataIndex": "content",
+            "key": "content"
+          },
+          {
+            "title": "操作",
+            "dataIndex": "operate",
+            "key": "operate",
+            "render": [
+              {
+                "element": "<div>编辑</div>",
+                "onclick": {
+                  "name": "openModels"
+                }
+              },
+              {
+                "element": "<div>删除</div>",
+                "onclick": {
+                  "name": "deleteStaticData"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "layout": {
+        "row": 1,
+        "column": 1,
+        "columnSpan": 12
+      }
+    },
+
+    {
+      "id": "model111",
+      "type": "modal",
+      "dataBinding": {
+        "path": "model1"
+      },
+      "metaData": {
+        "title": "编辑",
+        "open": false,
+        "jsonName": "config/interfaceData/edit.json",
+        "onOk": "handleOk",
+        "onCancel": "handleCancel",
+        "destroyOnClose": true,
+        "width": 1000
+      },
+      "layout": {
+        "row": 10,
+        "column": 1,
+        "columnSpan": 12
+      }
+    }
+  ]
+}

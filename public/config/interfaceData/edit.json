@@ -1,0 +1,126 @@
+{
+  "fields": [
+    {
+      "id": "type",
+      "type": "input",
+      "label": "类型",
+      "dataBinding": {
+        "path": "type"
+      },
+      "layout": {
+        "span": "500px",
+        "grid": "0"
+      }
+    },
+    {
+      "id": "dataId",
+      "type": "input",
+      "label": "数据源 ID",
+      "dataBinding": {
+        "path": "dataId"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "1"
+      }
+    },
+    {
+      "id": "requestUrl",
+      "type": "input",
+      "label": "请求地址",
+      "dataBinding": {
+        "path": "requestUrl"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "2"
+      }
+    },
+    {
+      "id": "requestParams",
+      "type": "input",
+      "label": "请求参数",
+      "dataBinding": {
+        "path": "requestParams"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "3"
+      }
+    },
+    {
+      "id": "requestMethod",
+      "type": "select",
+      "label": "请求方法",
+      "dataSource": [
+        { "label": "GET", "value": "GET" },
+        { "label": "POST", "value": "POST" },
+        { "label": "PUT", "value": "PUT" },
+        { "label": "DELETE", "value": "DELETE" }
+      ],
+      "dataBinding": {
+        "path": "requestMethod"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "4"
+      }
+    },
+    {
+      "id": "isSupportCrossDomain",
+      "type": "switch",
+      "label": "是否支持跨域",
+      "dataBinding": {
+        "path": "isSupportCrossDomain"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "5"
+      }
+    },
+    {
+      "id": "timeoutDuration",
+      "type": "input",
+      "label": "超时时长（毫秒）",
+      "dataBinding": {
+        "path": "timeoutDuration"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "6"
+      }
+    },
+    {
+      "id": "requestHeader",
+      "type": "input",
+      "label": "请求头信息",
+      "dataBinding": {
+        "path": "requestHeader"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "7"
+      }
+    },
+    {
+      "id": "dataFunction",
+      "type": "input",
+      "label": "添加数据处理函数",
+      "dataBinding": {
+        "path": "dataFunction"
+      },
+      "validator": [],
+      "layout": {
+        "span": "500px",
+        "grid": "8"
+      }
+    }
+  ]
+}

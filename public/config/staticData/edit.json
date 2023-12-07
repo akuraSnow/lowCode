@@ -1,4 +1,9 @@
 {
+  "layout": [
+    { "span": "200px", "grid": "1 0" },
+    { "span": "200px", "grid": "1 1" },
+    { "span": "200px", "grid": "0 0" }
+  ],
   "fields": [
     {
       "id": "input",
@@ -8,10 +13,7 @@
         "path": "name"
       },
       "layout": {
-        "row": 0,
-        "column": 0,
-        "columnSpan": 12,
-        "order": "0"
+        "grid": "0 0 0"
       }
     },
     {
@@ -22,12 +24,7 @@
         "path": "rowName"
       },
       "layout": {
-        "row": 0,
-        "column": 0,
-        "labelCol": 4,
-        "wrapperCol": 16,
-        "columnSpan": 12,
-        "order": "10"
+        "grid": "1 0 0"
       }
     },
     {
@@ -38,10 +35,7 @@
         "type": "primary"
       },
       "layout": {
-        "row": 0,
-        "column": 1,
-        "columnSpan": 2,
-        "order": "110"
+        "grid": "1 0 1"
       },
       "action": {
         "onclick": {
@@ -58,10 +52,7 @@
         "type": "primary"
       },
       "layout": {
-        "row": 0,
-        "column": 1,
-        "columnSpan": 2,
-        "order": "111"
+        "grid": "1 1 0"
       },
       "action": {
         "onclick": {
@@ -73,7 +64,8 @@
     {
       "id": "table222",
       "type": "table",
-      "dataSource": [],
+      "dataSourceAction": "modelTableDataSource",
+      "metaDataAction": "getTableMetaData",
       "metaData": {
         "columns": [
           {
@@ -94,10 +86,7 @@
         "editable": true
       },
       "layout": {
-        "row": 1,
-        "column": 1,
-        "columnSpan": 12,
-        "order": "2"
+        "grid": "2"
       }
     },
     {
@@ -108,10 +97,7 @@
         "type": "primary"
       },
       "layout": {
-        "row": 0,
-        "column": 1,
-        "columnSpan": 2,
-        "order": "31"
+        "grid": "3 0"
       },
       "action": {
         "onclick": {

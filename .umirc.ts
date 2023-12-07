@@ -11,9 +11,10 @@ export default defineConfig({
       routes: [
         { path: '/', component: '@/pages/index' },
         { path: '/data', component: '@/pages/data' },
-        { path: '/visibilityData', component: '@/pages/visibilityData' },
+        { path: '/actionData', component: '@/pages/visibilityData' },
         { path: '/staticData', component: '@/pages/staticData' },
         { path: '/calculatorData', component: '@/pages/calculatorData' },
+        { path: '/interfaceData', component: '@/pages/interfaceData' },
       ],
     },
   ],

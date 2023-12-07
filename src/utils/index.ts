@@ -99,7 +99,7 @@ export function getInitJson(
   };
 }
 
-export function updateFelidJson(fieldsJson: any) {
+export function updateFelidJson(fieldsJson: any, attribute: any) {
   let { elementArr, scaleArr } = getJson(
     JSON.parse(JSON.stringify(fieldsJson)),
     'colContainer',
@@ -108,7 +108,7 @@ export function updateFelidJson(fieldsJson: any) {
   console.log('json: ', elementArr);
   // const rowList = addColumns(json);
   // console.log('json: ', rowList);
-  return { scaleArr, fieldsJson: getFields(elementArr) };
+  return { scaleArr, fieldsJson: getFields(elementArr, attribute) };
 }
 
 export function bindExecuteJs(fieldsJson: any, funcObj: any) {
@@ -123,27 +123,17 @@ export function bindExecuteJs(fieldsJson: any, funcObj: any) {
   });
 }
 
-function getFields(json: any) {
+function getFields(json: any, attribute: any) {
   let arr: any = [];
   json.forEach((item: any, index: any) => {
     item.children.forEach((el: any) => {
-      const {
-        validator = [],
-        visibility = 'visible',
-        dataBinding: { path = 'empty' } = {},
-        columnSpan,
-        order,
-        parentRange,
-      } = el;
+      const { columnSpan, order, parentRange } = el;
 
       const grid = order.split('').join(' ');
+
       arr.push({
         ...el,
-        validator,
-        visibility,
-        dataBinding: {
-          path: path,
-        },
+        ...(attribute[el.key] ? attribute[el.key] : {}),
         layout: { span: columnSpan, grid, parentRange },
       });
     });

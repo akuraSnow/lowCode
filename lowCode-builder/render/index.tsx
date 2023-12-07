@@ -10,10 +10,11 @@ export default function RenderProvider(source: any, Component: any) {
   useEffect(() => {
     const observable = source.subscribe({
       next: (v: any) => {
-        console.log('v: ', v.data);
         const data = LayoutElement.normalizeTreeFormConfig(v.data);
+        console.log('data: ', data);
 
         setLayOutList(v.layout || []);
+        console.log('v.layout: ', v.layout);
         setChildren(data);
       },
     });

@@ -2,6 +2,7 @@ import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 
 export interface UserInfoModelState {
   functionObj: object;
+  attributeObj: object;
   count: any[];
   chooseKey: string;
 }
@@ -10,6 +11,7 @@ export interface UserInfoModelType {
   state: UserInfoModelState;
   effects: {
     query: Effect;
+    addSaveData: Effect;
   };
   reducers: {
     saveFunction: Reducer<UserInfoModelState>;
@@ -23,6 +25,7 @@ const UserInfoModel: UserInfoModelType = {
   namespace: 'treeData',
   state: {
     functionObj: {},
+    attributeObj: {},
     count: [
       {
         name: '页面',
@@ -63,12 +66,29 @@ const UserInfoModel: UserInfoModelType = {
   },
   effects: {
     *query({ payload }, { call, put }) {},
+    *addSaveData(action, b) {},
   },
   reducers: {
-    saveFunction(state, action) {
+    saveFunction(state, action): any {
+      const {
+        payload: { newFunctionObj, newAttributeObj },
+      } = action;
+      const { chooseKey, attributeObj, functionObj }: any = state;
+
+      const newAttribute = {
+        ...attributeObj,
+        [chooseKey]: {
+          ...attributeObj[chooseKey],
+          ...newAttributeObj[chooseKey],
+        },
+      };
+
+      const newFunction = { ...functionObj, ...newFunctionObj };
+
       return {
         ...state,
-        ...action.payload,
+        attributeObj: newAttribute,
+        functionObj: newFunction,
       };
     },
     changeTree(state, action) {
@@ -77,6 +97,7 @@ const UserInfoModel: UserInfoModelType = {
         ...action.payload,
       };
     },
+
     chooseKey(state, action) {
       return {
         ...state,

@@ -17,13 +17,12 @@ const obj: any = {
 const Property = (props: any) => {
   const {
     optionList,
-    treeData: { count, chooseKey, functionObj },
+    treeData: { count, chooseKey, functionObj, attributeObj },
+
     dispatch,
   } = props;
 
   const [dataList, setDataList] = useState([]);
-
-  console.log('count: ', count);
 
   const componentList = [
     {
@@ -108,13 +107,12 @@ const Property = (props: any) => {
 
   useEffect(() => {
     setDataList([]);
+    const data = cloneDeep(attributeObj[chooseKey]) || {};
     operateItem(count, chooseKey, (element: any) => {
-      console.log('element: ', element);
+      const { type } = element;
 
-      const { type, validator } = element;
-
-      element.validator = validator
-        ? validator.map((item: any) => item.name)
+      data.validator = data.validator
+        ? data.validator.map((item: any) => item.name)
         : undefined;
 
       if (iocContainer && iocContainer.skeleton.get(type)) {
@@ -124,9 +122,9 @@ const Property = (props: any) => {
           .filter((item: any) => staticProperties.includes(item.path))
           .map((item: any) => {
             if (item.path === 'path') {
-              item.defaultVal = element.dataBinding && element.dataBinding.path;
+              item.defaultVal = data.dataBinding && data.dataBinding.path;
             } else {
-              item.defaultVal = element[item.path];
+              item.defaultVal = data[item.path];
             }
 
             item.key = element.key;
@@ -147,20 +145,15 @@ const Property = (props: any) => {
   }
 
   function updateDataSubject(name: any, value: any, optionVal: any) {
-    let newFunctionObj: any = JSON.parse(JSON.stringify(functionObj));
-    const newCont = operateItem(
-      props.treeData.count,
-      chooseKey,
-      (element: any) => {
-        element[name] = cloneDeep(value);
-        return element;
+    const newAttributeObj = {
+      [chooseKey]: {
+        [name]: cloneDeep(value),
       },
-    );
+    };
 
-    newFunctionObj = { ...newFunctionObj, ...optionVal };
     dispatch({
-      type: 'treeData/changeTree',
-      payload: { count: newCont, functionObj: newFunctionObj },
+      type: 'treeData/saveFunction',
+      payload: { newAttributeObj, newFunctionObj: optionVal },
     });
   }
 

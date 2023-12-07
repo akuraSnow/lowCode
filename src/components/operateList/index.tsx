@@ -13,7 +13,7 @@ import { Menu } from 'antd';
 
 function OperateList(props: any) {
   const {
-    treeData: { count, functionObj },
+    treeData: { count, functionObj, attributeObj },
   } = props;
   const [open, setOpen] = useState(false);
 
@@ -23,7 +23,7 @@ function OperateList(props: any) {
 
   const showModal = async () => {
     console.log('count: ', count);
-    let { fieldsJson, scaleArr } = updateFelidJson(count);
+    let { fieldsJson, scaleArr } = updateFelidJson(count, attributeObj);
     console.log('fields: ', fieldsJson);
 
     const data = {
@@ -56,16 +56,20 @@ function OperateList(props: any) {
       icon: <SettingOutlined />,
       children: [
         {
+          key: 'interfaceData',
+          label: '接口管理',
+        },
+        {
           key: 'staticData',
-          label: '静态数据管理',
+          label: '数据管理',
         },
         {
           key: 'calculatorData',
-          label: '验证数据管理',
+          label: '验证管理',
         },
         {
-          key: 'visibilityData',
-          label: '显示数据管理',
+          key: 'actionData',
+          label: '方法管理',
         },
       ],
     },
