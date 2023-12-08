@@ -3,7 +3,7 @@ const fs = require('fs');
 const cors = require('cors');
 var url = require('url');
 
-const { writeFile, GetFilesInFolder, isFile } = require('./util.js');
+const { writeFile, GetFilesInFolder, fsReadFileSync } = require('./util.js');
 const app = express();
 const port = 8080;
 
@@ -65,6 +65,21 @@ app.post('/deleteJson', async function (req, res) {
 
   await fs.unlinkSync(filePath, () => {});
   res.send({ status: 200, data: content });
+});
+
+app.post('/addUrl', async function (req, res) {
+  const filePath = `${calculatorFolderName}interface/index.json`;
+  await writeFile(filePath, JSON.stringify(req.body, null, '\t'));
+
+  res.send({ status: 200, data: req.body });
+});
+
+app.get('/getUrl', async function (req, res) {
+  const filePath = `${calculatorFolderName}interface/index.json`;
+  const data = await fsReadFileSync(filePath);
+  console.log('data: ', data);
+
+  res.send({ status: 200, data });
 });
 
 app.listen(port, () => {

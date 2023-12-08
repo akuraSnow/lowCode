@@ -20,6 +20,7 @@ const isFile = (fileName) => {
 };
 
 module.exports.isFile = isFile;
+module.exports.fsReadFileSync = fsReadFileSync;
 
 module.exports.GetFilesInFolder = async (folderName) => {
   try {

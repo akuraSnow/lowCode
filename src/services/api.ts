@@ -105,3 +105,20 @@ export const deleteJsonByPath = async (params: any) => {
     data: params,
   });
 };
+
+// 添加地址
+export const addUrlByPath = async (params: any) => {
+  return await fetchAction({
+    url: 'addUrl',
+    method: 'POST',
+    data: params,
+  });
+};
+
+// 获取地址
+export const getUrl = async () => {
+  return await fetchAction({
+    url: 'getUrl',
+    method: 'get',
+  });
+};

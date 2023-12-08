@@ -1,0 +1,46 @@
+[
+  {
+    "dataId": "ddd",
+    "requestUrl": "rewr",
+    "requestMethod": "GET",
+    "requestHeader": []
+  },
+  {
+    "type": "保存数据",
+    "dataId": "ffff",
+    "requestUrl": "/saveData",
+    "requestMethod": "GET",
+    "requestHeader": []
+  },
+  {
+    "requestUrl": "4444",
+    "requestMethod": "GET",
+    "requestHeader": [],
+    "handleFunction": ["requestBefore", "requestSuccessAfter", "catchErr"],
+    "requestBefore": "俄文",
+    "requestSuccessAfter": "4343",
+    "catchErr": "232"
+  },
+  {
+    "requestUrl": "4354",
+    "requestMethod": "GET",
+    "requestHeader": [
+      {
+        "content": "45",
+        "name": "t r"
+      }
+    ],
+    "handleFunction": ["requestBefore", "requestSuccessAfter", "catchErr"],
+    "requestBefore": "trt ",
+    "requestSuccessAfter": "545",
+    "catchErr": "5345"
+  },
+  {
+    "requestUrl": "rer",
+    "requestMethod": "GET",
+    "requestHeader": [],
+    "handleFunction": ["requestBefore", "requestSuccessAfter"],
+    "requestBefore": "tt",
+    "requestSuccessAfter": "rrr"
+  }
+]
